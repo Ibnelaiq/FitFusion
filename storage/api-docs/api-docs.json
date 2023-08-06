@@ -1,0 +1,117 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Fitfusion API",
+        "version": "1"
+    },
+    "paths": {
+        "/api/v1/GetCustomers": {
+            "post": {
+                "description": "Add Customer",
+                "operationId": "574ec014818a4888a039eaf8eb82218c",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "First Name",
+                        "required": true
+                    },
+                    {
+                        "name": "surname",
+                        "in": "query",
+                        "description": "Sur Name",
+                        "required": true
+                    },
+                    {
+                        "name": "identificationNumber",
+                        "in": "query",
+                        "description": "Passport or ID #",
+                        "required": true
+                    },
+                    {
+                        "name": "phoneNumber",
+                        "in": "query",
+                        "description": "Phonenumber",
+                        "required": true
+                    },
+                    {
+                        "name": "gender",
+                        "in": "query",
+                        "description": "gender",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "M",
+                                "F"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "gender",
+                        "in": "query",
+                        "description": "gender",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "M",
+                                "F"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "gender": {
+                                            "type": "string"
+                                        },
+                                        "birth_date": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "surname": {
+                                            "type": "string"
+                                        },
+                                        "passport_or_id": {
+                                            "type": "string"
+                                        },
+                                        "phone_number": {
+                                            "type": "string"
+                                        },
+                                        "deleted_at": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "created_at": {
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Customer": {}
+        }
+    }
+}
