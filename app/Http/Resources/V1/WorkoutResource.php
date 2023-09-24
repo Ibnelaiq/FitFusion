@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CustomerActiveSubscription extends JsonResource
+class WorkoutResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,10 +14,11 @@ class CustomerActiveSubscription extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            "expiry_date" => $this->expiry_date,
-            "created_at"  => $this->created_at,
-            "status"      => $this->status
-        ];
+       return [
+            "name" => $this->name,
+            "description" => $this->description,
+            "video_url" => $this->video_url,
+            "activated_muscles" => new WorkoutActivatedMuscles($this->activatedMuscles)
+       ];
     }
 }

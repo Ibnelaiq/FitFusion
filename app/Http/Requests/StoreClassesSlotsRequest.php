@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\Customer;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCustomerMembershipsRequest extends FormRequest
+class StoreClassesSlotsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,8 +22,7 @@ class StoreCustomerMembershipsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "duration" => "required",
-            "created_by" => "required"
+            //
         ];
     }
 }

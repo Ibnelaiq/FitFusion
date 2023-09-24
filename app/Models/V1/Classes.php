@@ -5,8 +5,10 @@ namespace App\Models\V1;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerMembershipAttendance extends Model
+class Classes extends Model
 {
-    protected $guarded = [];
     use HasFactory;
+    public function timings(){
+        return $this->hasMany(ClassesTimings::class);
+    }
 }

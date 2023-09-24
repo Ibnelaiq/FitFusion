@@ -26,7 +26,8 @@ class CustomerResource extends JsonResource
             'phoneNumber' => $this->phone_number,
             'birthDate' => $this->birth_date,
             'gender' => $this->genderResource[$this->gender],
-            'isActive' => $this->deleted_at == null
+            'isActive' => $this->deleted_at == null,
+            'activeMembership' => new CustomerActiveSubscription($this->activeSubscription)
         ];
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
-use App\Models\V1\GymClasses;
-use App\Http\Requests\StoreGymClassesRequest;
-use App\Http\Requests\UpdateGymClassesRequest;
+use App\Models\V1\ClassesTimings;
+use App\Http\Requests\StoreClassesTimingsRequest;
+use App\Http\Requests\UpdateClassesTimingsRequest;
 
-class GymClassesController extends Controller
+class ClassesTimingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class GymClassesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGymClassesRequest $request)
+    public function store(StoreClassesTimingsRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class GymClassesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(GymClasses $gymClasses)
+    public function show(ClassesTimings $classesTimings)
     {
         //
     }
@@ -43,7 +43,7 @@ class GymClassesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(GymClasses $gymClasses)
+    public function edit(ClassesTimings $classesTimings)
     {
         //
     }
@@ -51,7 +51,7 @@ class GymClassesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGymClassesRequest $request, GymClasses $gymClasses)
+    public function update(UpdateClassesTimingsRequest $request, ClassesTimings $classesTimings)
     {
         //
     }
@@ -59,7 +59,7 @@ class GymClassesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(GymClasses $gymClasses)
+    public function destroy(ClassesTimings $classesTimings)
     {
         //
     }

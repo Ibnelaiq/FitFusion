@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CustomerActiveSubscription extends JsonResource
+class GeneralSingleErrorResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,7 @@ class CustomerActiveSubscription extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "expiry_date" => $this->expiry_date,
-            "created_at"  => $this->created_at,
-            "status"      => $this->status
+            "error" => $this["error"]
         ];
     }
 }

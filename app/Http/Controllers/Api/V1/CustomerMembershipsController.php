@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\Customer\StoreCustomerMembershipsRequest;
+use App\Http\Resources\V1\CustomerActiveSubscription;
 use App\Models\V1\CustomerMemberships;
-use App\Http\Requests\StoreCustomerMembershipsRequest;
-use App\Http\Requests\UpdateCustomerMembershipsRequest;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+
+
 
 class CustomerMembershipsController extends Controller
 {
@@ -29,7 +34,22 @@ class CustomerMembershipsController extends Controller
      */
     public function store(StoreCustomerMembershipsRequest $request)
     {
-        //
+        if($request->user()->activeSubscription){
+
+            $request->user()->extendActiveMembership($request->duration);
+
+            return new CustomerActiveSubscription($request->user()->activeSubscription);
+
+        }else{
+            CustomerMemberships::create([
+                'customer_id' => $request->user()->id,
+                'expiry_date' => Carbon::today()->addDays($request->duration),
+                'status'      => 1,
+            ]);
+
+            return new CustomerActiveSubscription($request->user()->activeSubscription);
+        }
+
     }
 
     /**

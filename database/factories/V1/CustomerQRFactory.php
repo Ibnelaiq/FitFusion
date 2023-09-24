@@ -5,9 +5,9 @@ namespace Database\Factories\V1;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\GymClasses>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\V1\CustomerQR>
  */
-class GymClassesFactory extends Factory
+class CustomerQRFactory extends Factory
 {
     /**
      * Define the model's default state.

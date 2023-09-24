@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\V1\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCustomerMembershipsRequest extends FormRequest
+class ResetCustomerCodeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class StoreCustomerMembershipsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "duration" => "required",
-            "created_by" => "required"
+            "prev_code" => "required|digits:5",
+            "new_code" => "required|digits:5|different:prev_code",
         ];
     }
 }

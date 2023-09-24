@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api\V1\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreGymClassesRequest extends FormRequest
+class AssignCustomerCodeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreGymClassesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "code" => "required|digits:5"
         ];
     }
 }
