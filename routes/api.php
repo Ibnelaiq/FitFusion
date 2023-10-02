@@ -23,6 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get("/", function(){
+    dd("asdasd");
+});
+
 
 Route::prefix("v1")->namespace("App\Http\Controllers\Api\V1")->group(function () {
 
