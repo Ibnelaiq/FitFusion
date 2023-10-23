@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Classes extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        "name","duration", "description", "price"];
     public function timings(){
         return $this->hasMany(ClassesTimings::class);
     }

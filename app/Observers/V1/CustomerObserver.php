@@ -16,7 +16,7 @@ class CustomerObserver
         CustomerMemberships::create([
             'customer_id' => $customer->id,
             'expiry_date' => Carbon::today()->addMonth(),
-            'status'      => 1,
+            'status'      => CustomerMemberships::STATUS_INACTIVE,
         ]);
     }
 

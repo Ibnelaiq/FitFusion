@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\ClassesTimingsController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerMembershipController;
 use App\Http\Controllers\ProfileController;
+use App\Models\V1\ClassesTimings;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect("/login");
 });
 
 Route::get('/dashboard', function () {
@@ -26,6 +31,41 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+
+    Route::prefix('dashboard/')->group(function () {
+
+        Route::get('/customer/payment/search', [CustomerController::class,'searchPayment'])->name('customer.searchPayment');
+        Route::get('/customer/details/search', [CustomerController::class,'searchDetails'])->name('customer.searchDetails');
+
+        Route::get("/customer/payment/{customer}", [CustomerController::class, "customerPayment"])->name("customer.payment");
+        Route::get("/customer/details/{customer}", [CustomerController::class, "details"])->name("customer.details");
+
+        Route::get("/customer/{customer}/subscriptions", [CustomerController::class, "subscription"])->name("customer.subscription");
+
+        Route::get("/customer/{customer}/subscriptions/create", [CustomerMembershipController::class, "create"])->name("customer.membership.create");
+        Route::post("/customer/{customer}/subscriptions/create", [CustomerMembershipController::class, "createMembership"])->name("customer.membership.create");
+
+
+        Route::get("/customer/subscription/{membership}/extend", [CustomerMembershipController::class, "extend"])->name("customer.membership.extend");
+        Route::post("/customer/subscription/{membership}/extend", [CustomerMembershipController::class, "extendMembership"])->name("customer.membership.extend");
+
+        Route::get("/customer/subscription/{membership}/cancel", [CustomerMembershipController::class, "cancel"])->name("customer.membership.cancel");
+        Route::post("/customer/subscription/{membership}/cancel", [CustomerMembershipController::class, "cancelMembership"])->name("customer.membership.cancel");
+
+        Route::get("/customer/subscription/{membership}/pause", [CustomerMembershipController::class, "pause"])->name("customer.membership.pause");
+        Route::post("/customer/subscription/{membership}/pause", [CustomerMembershipController::class, "pauseMembership"])->name("customer.membership.pause");
+
+        Route::post("/customer/payment/{customer}", [CustomerController::class, "customerPaymentAssignCode"])->name("customer.payment");
+
+        Route::resource('classes', ClassesController::class);
+        Route::resource('classesTimings', ClassesTimingsController::class);
+
+
+
+    });
 });
+
 
 require __DIR__.'/auth.php';

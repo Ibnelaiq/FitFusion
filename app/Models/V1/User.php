@@ -17,6 +17,7 @@ class User extends Authenticatable
     use HasRoles;
 
     const ROLE_ADMIN = 1;
+    const ROLE_RECEPTIONIST = 2;
     /**
      * The attributes that are mass assignable.
      *
@@ -26,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**

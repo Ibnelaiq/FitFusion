@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\Workouts\FetchAllRequest;
 use App\Http\Resources\V1\WorkoutResource;
 use App\Models\V1\Workouts;
 use App\Http\Requests\StoreWorkoutsRequest;
@@ -14,9 +15,15 @@ class WorkoutsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(FetchAllRequest $request)
     {
-        return new WorkoutsResource(Workouts::all());
+        $activatedMuscleCodes = $request->activated_muscle;
+
+        $workouts = Workouts::whereHas('activatedMuscles', function ($query) use ($activatedMuscleCodes) {
+            $query->whereIn('code', $activatedMuscleCodes);
+        })->get();
+
+        return new WorkoutsResource($workouts);
     }
 
     /**

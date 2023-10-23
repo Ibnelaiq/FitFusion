@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\CustomerController;
 use App\Http\Controllers\Api\V1\CustomerMembershipsController;
 use App\Http\Controllers\Api\V1\ClassesController;
 use App\Http\Controllers\Api\V1\CustomerMembershipAttendanceController;
+use App\Http\Controllers\Api\V1\FrontPageController;
 use App\Http\Controllers\Api\V1\WorkoutsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,8 @@ Route::prefix("v1")->namespace("App\Http\Controllers\Api\V1")->group(function ()
 
     Route::post('/customers', [CustomerController::class, "store"]);
 
-    Route::post("/customers/{id}/code", [CustomerController::class , "assignPassCode"]);
+    Route::put("/customers/{id}/code", [CustomerController::class , "assignPassCode"]);
+    Route::post("/customers/code", [CustomerController::class , "loginPassCode"]);
     Route::post("/customers/{id}/code/reset", [CustomerController::class , "resetPassCode"]);
 
     Route::middleware(["auth:sanctum"])->group(function(){
@@ -44,6 +46,8 @@ Route::prefix("v1")->namespace("App\Http\Controllers\Api\V1")->group(function ()
         Route::resource('classes', ClassesController::class);
         Route::resource('workouts', WorkoutsController::class);
     });
+
+    Route::get("/slider", [FrontPageController::class, "sliderImages"]);
 
 
 
