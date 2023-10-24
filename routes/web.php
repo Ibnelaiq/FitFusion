@@ -4,7 +4,9 @@ use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClassesTimingsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerMembershipController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\slotsController;
 use App\Models\V1\ClassesTimings;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +63,8 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('classes', ClassesController::class);
         Route::resource('classesTimings', ClassesTimingsController::class);
+        Route::resource('slots', slotsController::class);
+        Route::resource('products', ProductsController::class);
 
 
 

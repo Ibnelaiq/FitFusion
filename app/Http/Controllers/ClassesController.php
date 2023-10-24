@@ -14,13 +14,19 @@ class ClassesController extends Controller
         return view('dashboard.classes.index', compact('classes'));
     }
 
+    public function show(Classes $class){
+
+        return view("dashboard.classes.show", compact("class"));
+    }
+
     public function create()
     {
-        return view('classes.create');
+        return view('dashboard.classes.create');
     }
 
     public function store(Request $request)
     {
+
         // Validate the request
         $request->validate([
             'name' => 'required|string|max:255',
@@ -28,10 +34,20 @@ class ClassesController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'rating' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Add validation for image file
+
+        ]);
+
+        $class = Classes::create($request->all());
+
+        $imagePath = $request->file('image')->storeAs('images/classes', $class->id. '.' . $request->file('image')->getClientOriginalExtension() ,'public'); // 'images' is the storage path, adjust as needed
+
+        $class->update([
+            "image_url" => $imagePath
         ]);
 
         // Create a new class
-        Classes::create($request->all());
+
 
         return redirect()->route('classes.index')->with('success', 'Class created successfully.');
     }

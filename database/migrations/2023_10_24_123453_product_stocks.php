@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\V1\Products;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('customer_memberships', function (Blueprint $table) {
-            $table->date("paused_at")->nullable();
-            $table->integer("balance_days")->nullable();
-            $table->text("pausing_reason")->nullable();
+        Schema::create("product_stocks", function (Blueprint $table) {
+
+            $table->bigIncrements("id");
+            $table->foreignIdFor(Products::class)->constrained();
+            $table->integer("quantity");
+            $table->timestamps();
+
         });
+
     }
 
     /**
@@ -23,8 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('customer_memberships', function (Blueprint $table) {
-            //
-        });
+        //
     }
 };

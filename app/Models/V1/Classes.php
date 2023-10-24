@@ -9,7 +9,7 @@ class Classes extends Model
 {
     use HasFactory;
     protected $fillable = [
-        "name","duration", "description", "price"];
+        "name","duration", "description", "price", "rating", "image_url"];
     public function timings(){
         return $this->hasMany(ClassesTimings::class);
     }

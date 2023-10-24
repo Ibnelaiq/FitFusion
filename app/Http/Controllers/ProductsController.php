@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\V1\Products;
 use App\Http\Requests\StoreProductsRequest;
 use App\Http\Requests\UpdateProductsRequest;
+use App\Models\V1\ProductStocks;
 
 class ProductsController extends Controller
 {
@@ -13,7 +14,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
+        $products = Products::all();
+        return view("dashboard.products.index", compact("products"));
+
     }
 
     /**
@@ -21,7 +24,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        return view("dashboard.products.create");
     }
 
     /**
@@ -29,7 +32,30 @@ class ProductsController extends Controller
      */
     public function store(StoreProductsRequest $request)
     {
-        //
+
+        $product = Products::create(
+            $request->only([
+                "name",
+                "description"
+            ])
+        );
+
+        if($request->hasFile("image")){
+            $imagePath = $request->file('image')->storeAs('images/products', $product->id. '.' . $request->file('image')->getClientOriginalExtension() ,'public'); // 'images' is the storage path, adjust as needed
+            $product->update(['image'=> $imagePath]);
+        }
+
+        ProductStocks::create([
+            "products_id" => $product->id,
+            "quantity" => $request->input("starting_stock")
+        ]);
+
+        return  redirect()->route('products.index')->with('success','Product Added');
+
+
+
+
+
     }
 
     /**
@@ -43,9 +69,10 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Products $products)
+    public function edit(Products $product)
     {
-        //
+        return view('dashboard.products.edit', compact('product'));
+
     }
 
     /**
@@ -61,6 +88,9 @@ class ProductsController extends Controller
      */
     public function destroy(Products $products)
     {
-        //
+        dd($products);
+        $products->delete();
+        return response()->json(['success'=> 'true']);
+
     }
 }

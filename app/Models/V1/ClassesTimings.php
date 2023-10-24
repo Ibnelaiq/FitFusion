@@ -16,4 +16,9 @@ class ClassesTimings extends Model
         return $this->hasOne(ClassesSlots::class, 'id', 'classes_slots_id');
 
     }
+
+    public function class()
+    {
+        return $this->belongsTo(Classes::class, 'classes_id', 'id');
+    }
 }

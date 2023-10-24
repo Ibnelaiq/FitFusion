@@ -66,9 +66,6 @@
                 </div>
             </div>
 
-            <a href="{{ route('classes.index') }}"
-                class="mt-6 inline-block bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded transition duration-300">View
-                All Classes</a>
         </div>
     </div>
 </x-app-layout>

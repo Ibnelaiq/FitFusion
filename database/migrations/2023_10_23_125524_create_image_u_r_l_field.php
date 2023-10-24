@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('customer_memberships', function (Blueprint $table) {
-            $table->date("paused_at")->nullable();
-            $table->integer("balance_days")->nullable();
-            $table->text("pausing_reason")->nullable();
+        Schema::table('classes', function (Blueprint $table) {
+            $table->string("image_url")->nullable();
         });
     }
 
@@ -23,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('customer_memberships', function (Blueprint $table) {
+        Schema::table('classes', function (Blueprint $table) {
             //
         });
     }
