@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProductsRequest extends FormRequest
+class WorkoutStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,11 @@ class UpdateProductsRequest extends FormRequest
     {
         return [
             "name" => "required",
-            "description" => "required"
+            "description" => "required",
+            "video_url" => "required|url",
+            "dropdownF" => "required_without:dropdownB",
+            "dropdownB" => "required_without:dropdownF",
+            "image" => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }

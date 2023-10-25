@@ -12,45 +12,33 @@
                         <th scope="col" class="px-6 py-4">#</th>
                         <th scope="col" class="px-6 py-4">Name</th>
                         <th scope="col" class="px-6 py-4">Description</th>
-                        <th scope="col" class="px-6 py-4">Price</th>
-                        <th scope="col" class="px-6 py-4">Duration  </th>
-                        <th scope="col" class="px-6 py-4">Slots </th>
-                        <th scope="col" class="px-6 py-4">Action </th>
+                        <th scope="col" class="px-6 py-4">Video</th>
+                        <th scope="col" class="px-6 py-4">Image</th>
+                        <th scope="col" class="px-6 py-4">Action  </th>
+
                     </tr>
                     </thead>
                     <tbody>
                 <!-- Class Cards -->
-                @foreach($classes as $class)
+                @foreach($workouts as $workout)
 
                 <tr class="border-b dark:border-neutral-500">
-                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $class->id }}</td>
-                    <td class="whitespace-nowrap px-6 py-4">{{ $class->name }}</td>
-                    <td class="whitespace-nowrap px-6 py-4">{{ $class->description }}</td>
-                    <td class="whitespace-nowrap px-6 py-4">${{ $class->price }}</td>
-                    <td class="whitespace-nowrap px-6 py-4">{{ $class->duration }}</td>
-                    <td class="whitespace-nowrap px-6 py-4">
-                    @foreach ($class->timings as $timing)
-<p>
-    <span class="text-gray-200 text-sm">{{$timing->id}}</span>
-                            <span
-                            class="inline-block whitespace-nowrap rounded-full bg-green-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-success-700"
-                            >{{ $timing->slot->start }}</span>
-                            <span
-                            class="inline-block whitespace-nowrap rounded-full bg-red-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700"
-                            >{{ $timing->slot->end }}</span>
-</p>
-                    @endforeach
-                    </td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $workout->id }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ $workout->name }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ $workout->description }}</td>
+                    <td class="whitespace-nowrap px-6 py-4"><a target="_blank" href="{{ $workout->video_url }}"> View </a> </td>
+                    <td class="whitespace-nowrap px-6 py-4"><a target="_blank" href="{{ $workout->video_url }}"> View </a> </td>
+
 
                     <td class="whitespace-nowrap px-6 py-4">
-                        <a href="{{ route('classes.show', ['class'=> $class]) }}">
+                        <a href="{{ route('workouts.show', ['workout'=> $workout]) }}">
                             <button type="button" class="flex-shrink-0 bg-gray-500 hover:bg-gray-700 border-gray-500 hover:border-gray-700 text-sm border-4 text-white py-1 px-2 rounded">Detail</button>
                         </a>
-                        <a href="{{ route('classes.edit', ['class'=> $class]) }}">
+                        <a href="{{ route('workouts.edit', ['workout'=> $workout]) }}">
                         <button type="submit" class="flex-shrink-0 bg-gray-500 hover:bg-gray-700 border-gray-500 hover:border-gray-700 text-sm border-4 text-white py-1 px-2 rounded">Edit</button>
                         </a>
 
-                        <a href="{{ route('classes.destroy', ['class'=> $class]) }}" class="delete-btn">
+                        <a href="{{ route('classes.destroy', ['class'=> $workout]) }}" class="delete-btn">
                             <button type="submit" class="flex-shrink-0 bg-gray-500 hover:bg-gray-700 border-gray-500 hover:border-gray-700 text-sm border-4 text-white py-1 px-2 rounded">Delete</button>
                         </a>
                     </td>

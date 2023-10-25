@@ -28,6 +28,8 @@
                                 <a href="{{ route('customer.details', ['customer'=> $customer->id]) }}" class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded">Show Details</a>
                                 <a href="{{ route('customer.subscription', ['customer'=> $customer->id]) }}" class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded">Subscriptions</a>
                                 <a href="{{ route('customer.membership.create', ['customer'=> $customer->id]) }}" class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded">Add New Subscription</a>
+
+                                <a href="{{ route('products.sale.search', ['customer'=> $customer->id]) }}" class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded">Create Sale</a>
                             </div>
 
                             <div class="w-full">

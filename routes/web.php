@@ -7,6 +7,8 @@ use App\Http\Controllers\CustomerMembershipController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\slotsController;
+use App\Http\Controllers\WorkoutController;
+use App\Http\Controllers\WorkoutsMusclesController;
 use App\Models\V1\ClassesTimings;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +67,17 @@ Route::middleware('auth')->group(function () {
         Route::resource('classesTimings', ClassesTimingsController::class);
         Route::resource('slots', slotsController::class);
         Route::resource('products', ProductsController::class);
+        Route::resource('workouts', WorkoutController::class);
+        Route::resource('workoutsMuscles', WorkoutsMusclesController::class);
+
+        Route::get('sale', [ProductsController::class,'sale'])->name("products.sale.search");
+
+
+        Route::get('createSale/{product}', [ProductsController::class,'createSale'])->name("products.sale");
+        Route::put('createSale/{product}', [ProductsController::class,'storeSale'])->name("products.storeSale");
+
+        Route::get('saleCustomer/{sale}', [ProductsController::class,'saleCustomer'])->name("products.sale.customer.search");
+        Route::put('updateSale/{sale}', [ProductsController::class,'updateSale'])->name("products.updateSale");
 
 
 

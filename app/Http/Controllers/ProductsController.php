@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\V1\Products;
 use App\Http\Requests\StoreProductsRequest;
+use App\Http\Requests\storeSaleRequest;
 use App\Http\Requests\UpdateProductsRequest;
+use App\Models\V1\Customer;
 use App\Models\V1\ProductStocks;
+use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
@@ -61,9 +64,9 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Products $products)
+    public function show(Products $product)
     {
-        //
+        return view('dashboard.products.show', compact('product'));
     }
 
     /**
@@ -78,19 +81,94 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductsRequest $request, Products $products)
+    public function update(Products $product, UpdateProductsRequest $request)
     {
-        //
+        $product->update($request->all());
+
+        return redirect()->route('products.show', ["product" => $product])->with('success','Product Updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Products $products)
+    public function destroy(Products $product)
     {
-        dd($products);
-        $products->delete();
+        $product->delete();
         return response()->json(['success'=> 'true']);
 
     }
+
+    public function sale(Request $request){
+        $searchQuery = $request->input('search');
+        $customer = $request->input('customer') ?? 0;
+
+        $products = [];
+
+        if($searchQuery){
+           $products =Products::where('name', 'like', "%$searchQuery%")->get();
+        }
+        else{
+            $products = Products::all();
+        }
+
+
+        return view('dashboard.products.sale.search', ['products' => $products, 'customer' => $customer]);
+
+    }
+
+    public function saleCustomer(Request $request, ProductStocks $sale){
+
+        $searchQuery = $request->input('search');
+        $customer = [];
+
+        if($searchQuery){
+           $customer = Customer::where('name', 'like', "%$searchQuery%")->get();
+        }
+        else{
+            $customer = Customer::all()->take(10);
+        }
+
+
+        return view('dashboard.products.sale.searchCustomer', ['customers' => $customer, 'sale' => $sale]);
+
+    }
+
+    public function createSale(Products $product, Request $request){
+
+        return view('dashboard.products.sale.createSale', ['product' => $product, 'customer' => $request->input("customer") ?? 0]);
+
+    }
+    public function storeSale(storeSaleRequest $request, Products $product){
+
+
+        $sale = ProductStocks::create([
+            "products_id" => $product->id,
+            "quantity" => $request->input("quantity") * -1,
+            "customer_id" => $request->input("customer")
+        ]);
+
+        if($request->input("customer") == 0){
+            return redirect()->route("products.sale.customer.search", ["sale" => $sale])->with("success","Sale Created Successfully");
+        }
+
+        return redirect()->route("products.sale")->with("success","Sale Created Successfully");
+
+
+
+    }
+
+    public function updateSale(Request $request, ProductStocks $sale){
+
+
+        $sale->update([
+            "customer_id" => $request->input("customer"),
+        ]);
+
+        return redirect()->route("products.sale.search")->with("success","Sale Updated Successfully");
+
+
+
+
+    }
+
 }

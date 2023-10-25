@@ -17,10 +17,16 @@ class Products extends Model
 
 
     public function stock(){
-        return $this->hasMany(ProductStocks::class, 'products_id', 'id')
+        $stock = $this->hasMany(ProductStocks::class, 'products_id', 'id')
         ->selectRaw('sum(quantity) as total_quantity')
         ->groupBy('products_id')
-        ->value('total_quantity');
+        ->value('total_quantity') ?? "0";
+        return $stock;
+
+    }
+
+    public function stockHistory(){
+        return $this->hasMany(ProductStocks::class,'products_id','id');
     }
     use HasFactory;
 }

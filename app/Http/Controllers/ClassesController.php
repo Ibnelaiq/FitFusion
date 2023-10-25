@@ -83,6 +83,6 @@ class ClassesController extends Controller
     public function destroy(Classes $class)
     {
         $class->delete();
-        return redirect()->route('classes.index')->with('success', 'Class deleted successfully.');
+        return response()->json(["success"=>true], 200);
     }
 }

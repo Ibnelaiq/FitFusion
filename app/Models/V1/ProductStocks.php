@@ -9,7 +9,15 @@ class ProductStocks extends Model
 {
     protected $fillable = [
         "products_id",
-        "quantity"
+        "quantity",
+        "customer_id"
     ];
+
+    public function product(){
+        return $this->belongsTo(Products::class);
+    }
+    public function customer(){
+        return $this->belongsTo(Customer::class);
+    }
     use HasFactory;
 }
