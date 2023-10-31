@@ -68,6 +68,14 @@
                 @endif
             </div>
 
+            <div class="mb-4">
+                <label for="image" class="block text-sm font-medium text-gray-600">Detail Images:</label>
+                <input type="file" id="image" name="details_images[]" multiple class="mt-1 p-2 w-full border rounded-md {{ $errors->has('details_images') ? 'border-red-500' : 'border-gray-300' }}" required>
+                @if($errors->has('image_url'))
+                    <p class="text-red-500 text-sm mt-1">{{ $errors->first('details_images') }}</p>
+                @endif
+            </div>
+
             <!-- Save Button -->
             <div class="mb-4">
                 <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300">Add Workout</button>

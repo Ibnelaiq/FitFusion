@@ -17,7 +17,9 @@ class WorkoutsResource extends ResourceCollection
         return $this->collection->map(function ($item) {
             return [
                 'id' => $item->id,
-                'name' => $item->name
+                'name' => $item->name,
+                'description' => $item->description,
+                'image' => $item->image_url
             ];
         });
     }

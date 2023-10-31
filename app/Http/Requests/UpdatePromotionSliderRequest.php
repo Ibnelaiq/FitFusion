@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WorkoutStoreRequest extends FormRequest
+class UpdatePromotionSliderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,13 +22,7 @@ class WorkoutStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required",
-            "description" => "required",
-            "video_url" => "required|url",
-            "dropdownF" => "required_without:dropdownB",
-            "dropdownB" => "required_without:dropdownF",
-            "image_url" => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            "details_images" => "required"
+            //
         ];
     }
 }

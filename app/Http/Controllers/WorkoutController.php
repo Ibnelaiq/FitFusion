@@ -7,7 +7,8 @@ use App\Models\V1\WorkoutActivatedMuscles;
 use App\Models\V1\Workouts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+use File;
+use Illuminate\Support\Facades\Storage;
 
 class WorkoutController extends Controller
 {
@@ -40,16 +41,20 @@ class WorkoutController extends Controller
      */
     public function store(WorkoutStoreRequest $request)
     {
-
         $workout = Workouts::create($request->only([
             "name","description","video_url"
         ]));
 
-        $imagePath = $request->file('image')->storeAs('images/workouts', $workout->id. '.' . $request->file('image')->getClientOriginalExtension() ,'public');
+        $imagePath = $request->file('image_url')->storeAs('/images/workouts', $workout->id. '.' . $request->file('image_url')->getClientOriginalExtension() ,'public');
 
         $workout->update([
             "image_url" => $imagePath
         ]);
+
+        $i = 0;
+        foreach ($request->file("details_images") as $file) {
+            $file->storeAs('images/workouts/'.$workout->id, $workout->id. "-". $i++.".". $request->file('image_url')->getClientOriginalExtension() ,'public');
+        }
 
         if($request->has("dropdownF")){
             WorkoutActivatedMuscles::create([

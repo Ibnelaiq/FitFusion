@@ -9,11 +9,16 @@ class CustomerAuthRepository
 {
     public function confirmPaymentAndAssignPassCode(Customer $customer, string $passCode) : bool {
 
+
         try{
+
             if(!$customer->auth){
+
                 $auth = new CustomerAuth;
                 $auth->customer_id = $customer->id;
                 $auth->code        = $passCode;
+
+                $auth->save();
 
                 return true;
             }

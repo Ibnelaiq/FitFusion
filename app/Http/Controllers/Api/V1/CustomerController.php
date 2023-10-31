@@ -17,6 +17,7 @@ use App\Http\Resources\V1\GeneralSingleResource;
 use App\Models\V1\CustomerAuth;
 use App\Models\V1\CustomerMemberships;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use OpenApi\Attributes as OA;
 
 
@@ -137,14 +138,19 @@ class CustomerController extends Controller
     public function store(StoreCustomerRequest $request)
     {
 
-        // all() but it is validated and merged
-        // Observer adding 1 month by default
+        $decodedData = base64_decode($request->get("base64_image"));
+
         $customer  = Customer::create($request->all());
 
-        // $token     = $customer->createToken('auth-token')->plainTextToken;
-        // >additional([
-        //     'token' => $token
-        // ]
+
+        $url = 'app/public/images/users/'. $customer->id;
+
+        File::makeDirectory(storage_path($url));
+
+        $filePath =  storage_path($url. '/pic.jpg');
+
+        file_put_contents($filePath, $decodedData);
+
 
         return (new CustomerResource($customer));
     }

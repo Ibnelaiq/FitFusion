@@ -85,4 +85,21 @@ class ClassesController extends Controller
         $class->delete();
         return response()->json(["success"=>true], 200);
     }
+
+    public function markActive(Classes $class)
+    {
+        $class->update([
+            "status" => Classes::STATUS_ACTIVE
+        ]);
+        return redirect()->route('classes.index')->with('success', 'Class updated "Active" successfully.');
+    }
+
+    public function markInActive(Classes $class)
+    {
+        $class->update([
+            "status" => Classes::STATUS_INACTIVE
+        ]);
+        return redirect()->route('classes.index')->with('success', 'Class updated "InActive" successfully.');
+    }
+
 }

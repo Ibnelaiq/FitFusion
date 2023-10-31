@@ -15,7 +15,13 @@
                     </div>
                     <div>
                         <p class="text-gray-600 font-semibold">Expiry Date:</p>
-                        <p class="text-gray-900">{{ $membership->expiry_date }}</p>
+
+                        @if ( in_array($membership->status,[999,950]))
+                            <p class="text-red-600">Cancelled</p>
+                        @else
+                            <p class="text-gray-900">{{ $membership->expiry_date }}</p>
+                        @endif
+
                     </div>
 
                     @if ($membership->status == 1)
@@ -47,8 +53,15 @@
                             class="opacity-75 bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
                             Cancel
                         </a>
+                        @if ($membership->status == 901)
+                        <a href="{{ route('customer.membership.resume', ['membership'=> $membership->id]) }}"
+                            class="bg-green-700 hover:bg-green-900 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+                            Un-Pause
+                        </a>
+                        @endif
                     </div>
                     @endif
+
 
                 </div>
 

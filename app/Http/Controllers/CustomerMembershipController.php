@@ -70,10 +70,21 @@ class CustomerMembershipController extends Controller
         }catch(\Exception $e){
 
             return redirect()->route('dashboard')->with('errorMessage', "Unknown Error Occured");
+
         }
     }
 
     public function create(Customer $customer){
+
+
+        if($customer->pausedSubscription){
+            return redirect()->route("customer.subscription", ["customer" => $customer])->with("error","This user has PAUSED membership, Kindly continue or cancel that membership.");
+        }
+        if($customer->activeSubscription){
+            return redirect()->route("customer.subscription", ["customer" => $customer])->with("error","This user already has active membership.");
+        }
+
+
         return view("dashboard.customer.subscription.create", compact("customer"));
     }
     public function createMembership(Customer $customer, CreateNewMembershipRequest $request){
@@ -91,6 +102,34 @@ class CustomerMembershipController extends Controller
             return redirect()->route('dashboard')->with('errorMessage', "Unknown Error Occured");
         }
 
+    }
+
+    public function resume(CustomerMemberships $membership){
+
+        if($membership->status != CustomerMemberships::STATUS_PAUSED){
+            return redirect()->route("dashboard")->with("error", "Unknown error occured");
+        }
+
+        return view("dashboard.customer.subscription.resume", compact("membership"));
+
+    }
+
+    public function resumeMembership(Request $request, CustomerMemberships $membership){
+
+
+        if($membership->status != CustomerMemberships::STATUS_PAUSED){
+            return redirect()->route("dashboard")->with("error", "Unknown error occured");
+        }
+
+        try{
+            $this->customerMembershipRepository->resumeMembership($membership);
+            return redirect()->route('dashboard')->with('successMessage', "Membership UN-Paused Successfully");
+
+        }catch(\Exception $e){
+
+            return redirect()->route('dashboard')->with('errorMessage', "Unknown Error Occured");
+
+        }
     }
 
 

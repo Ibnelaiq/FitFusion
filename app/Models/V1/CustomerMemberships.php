@@ -24,16 +24,21 @@ class CustomerMemberships extends Model
         );
     }
 
-    public function checkPauseStatus()
+    public function pauseIfTodayPauseDate()
     {
+        if($this->paused_at){
+            $pausedAt = $this->paused_at instanceof Carbon ? $this->paused_at : Carbon::createFromFormat('Y-m-d', $this->paused_at);
 
-        $pausedAt = $this->paused_at instanceof Carbon ? $this->paused_at : Carbon::createFromFormat('Y-m-d', $this->paused_at);
+            if ($pausedAt->isToday() && $this->status < 900) {
 
-        if ($pausedAt->isToday() && $this->status < 900) {
-
-            $this->status = CustomerMemberships::STATUS_PAUSED;
-            $this->save();
+                $this->status = CustomerMemberships::STATUS_PAUSED;
+                $this->save();
+            }
         }
+    }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class);
     }
 
     public function getStatus()

@@ -18,10 +18,21 @@ class WorkoutsController extends Controller
     public function index(FetchAllRequest $request)
     {
         $activatedMuscleCodes = $request->activated_muscle;
+        $search_keyword = $request->search_keyword;
 
-        $workouts = Workouts::whereHas('activatedMuscles', function ($query) use ($activatedMuscleCodes) {
-            $query->whereIn('code', $activatedMuscleCodes);
-        })->get();
+        if($search_keyword != ""){
+            $search_keyword = "%". $search_keyword ."%";
+
+            $workouts = Workouts::where('name', 'like', $search_keyword)->get();
+
+        }else{
+            $workouts = Workouts::whereHas('activatedMuscles', function ($query) use ($activatedMuscleCodes) {
+                $query->whereIn('code', $activatedMuscleCodes);
+            })->get();
+        }
+
+
+
 
         return new WorkoutsResource($workouts);
     }

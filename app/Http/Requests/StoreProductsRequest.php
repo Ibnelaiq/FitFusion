@@ -25,7 +25,9 @@ class StoreProductsRequest extends FormRequest
             "name" => "required",
             "description" => "required",
             "starting_stock" => "required",
-            "image" => "image|mimes:png,jpg,jpeg"
+            "image" => "image|mimes:png,jpg,jpeg",
+            "normal_price" => "required",
+            "sale_price" => "lt:normal_price"
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerMembershipController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromotionSliderController;
 use App\Http\Controllers\slotsController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\WorkoutsMusclesController;
@@ -61,14 +62,27 @@ Route::middleware('auth')->group(function () {
         Route::get("/customer/subscription/{membership}/pause", [CustomerMembershipController::class, "pause"])->name("customer.membership.pause");
         Route::post("/customer/subscription/{membership}/pause", [CustomerMembershipController::class, "pauseMembership"])->name("customer.membership.pause");
 
+        Route::get("/customer/subscription/{membership}/resume", [CustomerMembershipController::class, "resume"])->name("customer.membership.resume");
+        Route::post("/customer/subscription/{membership}/resume", [CustomerMembershipController::class, "resumeMembership"])->name("customer.membership.resume");
+
+
         Route::post("/customer/payment/{customer}", [CustomerController::class, "customerPaymentAssignCode"])->name("customer.payment");
 
+
+
         Route::resource('classes', ClassesController::class);
+
+        Route::get("/classes/{class}/active", [ClassesController::class, "markActive"])->name("classes.active");
+        Route::get("/classes/{class}/inactive", [ClassesController::class, "markInActive"])->name("classes.inactive");
+
         Route::resource('classesTimings', ClassesTimingsController::class);
         Route::resource('slots', slotsController::class);
         Route::resource('products', ProductsController::class);
         Route::resource('workouts', WorkoutController::class);
         Route::resource('workoutsMuscles', WorkoutsMusclesController::class);
+        Route::resource('slider', PromotionSliderController::class);
+
+        Route::get('slider/{slider}/status', [PromotionSliderController::class,'changeStatus'])->name("slider.status");
 
         Route::get('sale', [ProductsController::class,'sale'])->name("products.sale.search");
 

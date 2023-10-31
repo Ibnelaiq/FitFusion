@@ -1,6 +1,7 @@
 <x-app-layout>
+
     <div class="mt-4 p-6 max-w-[80%] mx-auto bg-white rounded shadow-md">
-        <h2 class="text-2xl font-semibold mb-4">Classes:</h2>
+        <h2 class="text-2xl font-semibold mb-4">Products:</h2>
 
         <div class="flex flex-col">
             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -10,69 +11,43 @@
                     <thead class="border-b font-medium dark:border-neutral-500">
                     <tr>
                         <th scope="col" class="px-6 py-4">#</th>
-                        <th scope="col" class="px-6 py-4">Name</th>
-                        <th scope="col" class="px-6 py-4">Description</th>
-                        <th scope="col" class="px-6 py-4">Price</th>
-                        <th scope="col" class="px-6 py-4">Duration  </th>
-                        <th scope="col" class="px-6 py-4">Slots </th>
-                        <th scope="col" class="px-6 py-4">Status </th>
+                        <th scope="col" class="px-6 py-4">View</th>
+                        <th scope="col" class="px-6 py-4">Status</th>
                         <th scope="col" class="px-6 py-4">Action </th>
                     </tr>
                     </thead>
                     <tbody>
                 <!-- Class Cards -->
-                @foreach($classes as $class)
+                @foreach($sliders as $slider)
 
                 <tr class="border-b dark:border-neutral-500">
-                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $class->id }}</td>
-                    <td class="whitespace-nowrap px-6 py-4">{{ $class->name }}</td>
-                    <td class="whitespace-nowrap px-6 py-4">{{ $class->description }}</td>
-                    <td class="whitespace-nowrap px-6 py-4">${{ $class->price }}</td>
-                    <td class="whitespace-nowrap px-6 py-4">{{ $class->duration }}</td>
-                    <td class="whitespace-nowrap px-6 py-4 {{$class->status == 1 ? "text-green-400" : "text-red-400"}}">{{ $class->status == 1 ? "ACTIVE" : "INACTIVE"}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $slider->id }}</td>
                     <td class="whitespace-nowrap px-6 py-4">
-                    @foreach ($class->timings as $timing)
-<p>
-    <span class="text-gray-200 text-sm">{{$timing->id}}</span>
-                            <span
-                            class="inline-block whitespace-nowrap rounded-full bg-green-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-success-700"
-                            >{{ $timing->slot->start }}</span>
-                            <span
-                            class="inline-block whitespace-nowrap rounded-full bg-red-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700"
-                            >{{ $timing->slot->end }}</span>
-</p>
-                    @endforeach
+                        <a href="{{ $slider->url }}" target="_blank" class="text-green-700"> <b> View </b>  </a>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                        @if ($slider->status == 1)
+                            <p class="text-green-500"> ACTIVE </p>
+                        @else
+                        <p class="text-red-500"> INACTIVE </p>
+                        @endif
                     </td>
 
                     <td class="whitespace-nowrap px-6 py-4">
-                        <a href="{{ route('classes.show', ['class'=> $class]) }}">
-                            <button type="button" class="flex-shrink-0 bg-gray-500 hover:bg-gray-700 border-gray-500 hover:border-gray-700 text-sm border-4 text-white py-1 px-2 rounded">Detail</button>
-                        </a>
-                        <a href="{{ route('classes.edit', ['class'=> $class]) }}">
-                        <button type="submit" class="flex-shrink-0 bg-gray-500 hover:bg-gray-700 border-gray-500 hover:border-gray-700 text-sm border-4 text-white py-1 px-2 rounded">Edit</button>
-                        </a>
-
-                        <a href="{{ route('classes.destroy', ['class'=> $class]) }}" class="delete-btn">
-                            <button type="submit" class="flex-shrink-0 bg-gray-500 hover:bg-gray-700 border-gray-500 hover:border-gray-700 text-sm border-4 text-white py-1 px-2 rounded">Delete</button>
-                        </a>
-
-                        @if ($class->status == 1)
-                            <a href="{{ route('classes.inactive', ['class'=> $class]) }}">
-                                <button type="submit" class="flex-shrink-0 bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700 text-sm border-4 text-white py-1 px-2 rounded">Inactive</button>
+                        @if ($slider->status == 1)
+                            <a href="{{ route('slider.status', ['slider'=> $slider, 'flag' => 2]) }}">
+                                <button type="button" class="flex-shrink-0 bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700 text-sm border-4 text-white py-1 px-2 rounded">Inactive</button>
                             </a>
                         @else
-                            <a href="{{ route('classes.active', ['class'=> $class]) }}">
-                                <button type="submit" class="flex-shrink-0 bg-green-500 hover:bg-green-700 border-green-500 hover:green-red-700 text-sm border-4 text-white py-1 px-2 rounded">Active</button>
+                            <a href="{{ route('slider.status', ['slider'=> $slider, 'flag' => 1]) }}">
+                                <button type="button" class="flex-shrink-0 bg-green-500 hover:bg-green-700 border-green-500 hover:border-green-700 text-sm border-4 text-white py-1 px-2 rounded">Active</button>
                             </a>
                         @endif
 
 
-
-
                     </td>
 
-
-                </tr>
+                {{-- </tr> --}}
                 @endforeach
 
                         </tbody>
@@ -86,7 +61,6 @@
         </div>
     </div>
 </x-app-layout>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -153,4 +127,3 @@
      });
  });
  </script>
-

@@ -1,95 +1,30 @@
 <x-app-layout>
     <div class="mt-4 p-6 max-w-[80%] mx-auto bg-white rounded shadow-md">
 
-        <h2 class="text-2xl font-semibold mb-4">Edit Class: {{ $class->name }}</h2>
+        <h2 class="text-2xl font-semibold mb-4">Edit Product: {{ $product->name }}</h2>
 
-        <form method="POST" action="{{ route('classes.update', ['class' => $class]) }}">
+        <form method="POST" action="{{ route('products.update', ['product' => $product]) }}">
             @csrf
             @method('PUT')
 
             <!--  Name -->
             <div class="mb-4">
                 <label for="name" class="block text-sm font-medium text-gray-600">Name:</label>
-                <input type="text" id="name" name="name" value="{{ $class->name }}" class="mt-1 p-2 w-full border rounded-md">
+                <input type="text" id="name" name="name" value="{{ $product->name }}" class="mt-1 p-2 w-full border rounded-md" required>
             </div>
 
             <!-- Class Description -->
             <div class="mb-4">
                 <label for="description" class="block text-sm font-medium text-gray-600">Description:</label>
-                <textarea id="description" name="description" class="mt-1 p-2 w-full border rounded-md">{{ $class->description }}</textarea>
+                <textarea id="description" name="description" class="mt-1 p-2 w-full border rounded-md">{{ $product->description }}</textarea>
             </div>
 
-            <!-- Class Price -->
-            <div class="mb-4">
-                <label for="price" class="block text-sm font-medium text-gray-600">Price:</label>
-                <input type="number" id="price" name="price" value="{{ $class->price }}" class="mt-1 p-2 w-full border rounded-md">
-            </div>
-
-            <!-- Class Duration -->
-            <div class="mb-4">
-                <label for="duration" class="block text-sm font-medium text-gray-600">Duration:</label>
-                <input type="text" id="duration" name="duration" value="{{ $class->duration }}" class="mt-1 p-2 w-full border rounded-md">
-            </div>
-
-            <!-- Class Rating -->
-            <div class="mb-4">
-                <label for="rating" class="block text-sm font-medium text-gray-600">Rating:</label>
-
-            </div>
             <div class="mb-4">
                 <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300">Save Changes</button>
 
         </form>
             </div>
 
-            <div class="w-100 mb-4">
-
-                <form method="POST" class="flex" action="{{ route('classesTimings.store', ['class' => $class]) }}">
-                    @csrf
-                    <select id="rating" name="slot" class="flex mt-1 p-2 w-full border rounded-md">
-                        @foreach ($classesSlots as $slot)
-                            <option value="{{ $slot->id}}" > {{ $slot->start }} - {{$slot->end}}</option>
-                        @endforeach
-                    </select>
-
-                    <button type="submit" class="w-1/3 bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300">Add Class Timings</button>
-                </form>
-            </div>
-
-            <table class="min-w-full text-left text-sm font-light">
-                <thead class="border-b font-medium dark:border-neutral-500">
-                <tr>
-                    <th scope="col" class="px-6 py-4">#</th>
-                    <th scope="col" class="px-6 py-4">Slot Start</th>
-                    <th scope="col" class="px-6 py-4">Slot End  </th>
-                    <th scope="col" class="px-6 py-4">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-
-
-            @foreach ($class->timings as $timing)
-            <tr class="border-b-2 p-16" >
-                <td> {{ $timing->id }} </td>
-                <td> {{ $timing->slot->start }} </td>
-                <td> {{ $timing->slot->end }} </td>
-                <td>
-                    <a href="{{ route('classesTimings.destroy', ['classesTiming'=>$timing]) }}" class="delete-btn">
-                        <button
-                        class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300 "
-                        >Delete</button>
-                    </a>
-                </td>
-            </tr>
-            @endforeach
-
-
-        </tbody>
-    </table>
-
-            <!-- Save Button -->
-
-    </div>
 
     <script>
        document.addEventListener('DOMContentLoaded', function() {

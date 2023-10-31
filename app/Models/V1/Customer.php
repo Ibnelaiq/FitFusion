@@ -39,6 +39,12 @@ class Customer extends Model
         ])->where("expiry_date",">",now())->latest();
     }
 
+    public function pausedSubscription(){
+        return $this->hasOne(CustomerMemberships::class)->where([
+            "status" => CustomerMemberships::STATUS_PAUSED
+        ])->where("expiry_date",">",now())->latest();
+    }
+
     public function memberships(){
         // Get all memberships and update status if expiry date is today or in the past
         $memberships = $this->hasMany(CustomerMemberships::class)->latest()->get();

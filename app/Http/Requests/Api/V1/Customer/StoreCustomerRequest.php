@@ -34,7 +34,8 @@ class StoreCustomerRequest extends FormRequest
             "identificationNumber" => "",
             "birthDate" => "required|date_format:Y-m-d|before:today",
             "phoneNumber" => "required",
-            "gender" => Rule::in("M","F")
+            "gender" => Rule::in("M","F"),
+            "base64_image" => "required"
         ];
     }
 }

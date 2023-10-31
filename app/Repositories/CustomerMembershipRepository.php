@@ -36,7 +36,7 @@ class CustomerMembershipRepository
 
     public function pauseMembership(CustomerMemberships $customerMembership, string $pause_date, string $pause_reason) : bool {
 
-        $customerMembership->checkPauseStatus();
+
 
         $pauseDate = Carbon::createFromFormat('Y-m-d', $pause_date);
 
@@ -51,9 +51,21 @@ class CustomerMembershipRepository
             "balance_days"   => $balanceDays
         ]);
 
+        $customerMembership->pauseIfTodayPauseDate();
 
 
         return true;
+    }
+
+    public function resumeMembership(CustomerMemberships $customerMembership){
+
+        $customerMembership->update([
+            "status"=> CustomerMemberships::STATUS_CANCELLED
+        ]);
+
+
+        return $this->createMembership($customerMembership->customer, $customerMembership->balance_days);
+
     }
 
     public function createMembership(Customer $customer, int $daysToCreate) : bool {

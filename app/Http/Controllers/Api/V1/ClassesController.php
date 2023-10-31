@@ -16,8 +16,10 @@ class ClassesController extends Controller
      */
     public function index()
     {
-        return new \App\Http\Resources\V1\Classes(Classes::all());
-        // return Classes::all();
+        return new \App\Http\Resources\V1\Classes(Classes::where([
+            "status" => Classes::STATUS_ACTIVE
+        ])->get());
+
     }
 
     /**

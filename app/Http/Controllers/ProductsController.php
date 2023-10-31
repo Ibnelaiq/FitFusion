@@ -39,18 +39,21 @@ class ProductsController extends Controller
         $product = Products::create(
             $request->only([
                 "name",
-                "description"
+                "description",
+                "normal_price",
+                "sale_price"
             ])
         );
 
         if($request->hasFile("image")){
             $imagePath = $request->file('image')->storeAs('images/products', $product->id. '.' . $request->file('image')->getClientOriginalExtension() ,'public'); // 'images' is the storage path, adjust as needed
-            $product->update(['image'=> $imagePath]);
+            $product->update(['image_url'=> $imagePath]);
         }
 
         ProductStocks::create([
             "products_id" => $product->id,
-            "quantity" => $request->input("starting_stock")
+            "quantity" => $request->input("starting_stock"),
+            "customer_id" => auth()->user()->id
         ]);
 
         return  redirect()->route('products.index')->with('success','Product Added');
@@ -151,7 +154,7 @@ class ProductsController extends Controller
             return redirect()->route("products.sale.customer.search", ["sale" => $sale])->with("success","Sale Created Successfully");
         }
 
-        return redirect()->route("products.sale")->with("success","Sale Created Successfully");
+        return redirect()->route("products.sale.search")->with("success","Sale Created Successfully");
 
 
 

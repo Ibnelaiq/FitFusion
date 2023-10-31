@@ -42,15 +42,15 @@
                 @endif
             </div>
 
-            <div class="mb-4">
+            <div class="mb-4 hidden">
                 <label for="rating" class="block text-sm font-medium text-gray-600">Rating:</label>
                 <select id="rating" name="rating" class="mt-1 p-2 w-full border rounded-md {{ $errors->has('rating') ? 'border-red-500' : 'border-gray-300' }}" required>
-                    <option value="" disabled selected>Select Rating</option>
+                    {{-- <option value="" disabled selected>Select Rating</option> --}}
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option value="5" selected>5</option>
                 </select>
                 @if($errors->has('rating'))
                     <p class="text-red-500 text-sm mt-1">{{ $errors->first('rating') }}</p>

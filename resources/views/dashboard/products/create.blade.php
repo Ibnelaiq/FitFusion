@@ -33,6 +33,22 @@
             </div>
 
             <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-600">Normal Price:</label>
+                <input type="number" id="name" name="normal_price" class="mt-1 p-2 w-full border rounded-md {{ $errors->has('normal_price') ? 'border-red-500' : 'border-gray-300' }}" required>
+                @if($errors->has('starting_stock'))
+                    <p class="text-red-500 text-sm mt-1">{{ $errors->first('normal_price') }}</p>
+                @endif
+            </div>
+
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-600">Sale Price:</label>
+                <input type="number" id="name" value="0" name="sale_price" class="mt-1 p-2 w-full border rounded-md {{ $errors->has('sale_price') ? 'border-red-500' : 'border-gray-300' }}">
+                @if($errors->has('sale_price'))
+                    <p class="text-red-500 text-sm mt-1">{{ $errors->first('sale_price') }}</p>
+                @endif
+            </div>
+
+            <div class="mb-4">
                 <label for="image" class="block text-sm font-medium text-gray-600">Image:</label>
                 <input type="file" id="image" name="image" class="mt-1 p-2 w-full border rounded-md {{ $errors->has('image') ? 'border-red-500' : 'border-gray-300' }}">
                 @if($errors->has('image'))
