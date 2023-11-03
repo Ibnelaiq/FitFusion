@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\V1\ClassesController;
 use App\Http\Controllers\Api\V1\CustomerMembershipAttendanceController;
 use App\Http\Controllers\Api\V1\FrontPageController;
 use App\Http\Controllers\Api\V1\WorkoutsController;
+use App\Models\V1\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,12 +26,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get("/", function(){
-    dd("asdasd");
+Route::get("/create-user-dev", function(){
+    User::create([
+        "name"=> "wahab",
+        "email" => "wahab@fitfusion.com",
+        "password" =>  Hash::make("password"),
+        "role" => 1
+    ]);
+    User::create([
+        "name"=> "ahmed",
+        "email" => "ahmed@fitfusion.com",
+        "password" =>  Hash::make("password"),
+        "role" => 1
+    ]);
 });
 
 
 Route::prefix("v1")->namespace("App\Http\Controllers\Api\V1")->group(function () {
+
+
 
     Route::post('/customers', [CustomerController::class, "store"]);
 
