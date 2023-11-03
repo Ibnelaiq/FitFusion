@@ -26,20 +26,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get("/create-user-dev", function(){
-    User::create([
-        "name"=> "wahab",
-        "email" => "wahab@fitfusion.com",
-        "password" =>  Hash::make("password"),
-        "role" => 1
-    ]);
-    User::create([
-        "name"=> "ahmed",
-        "email" => "ahmed@fitfusion.com",
-        "password" =>  Hash::make("password"),
-        "role" => 1
-    ]);
-});
+// Route::get("/create-user-dev", function(){
+//     User::create([
+//         "name"=> "wahab",
+//         "email" => "wahab@fitfusion.com",
+//         "password" =>  Hash::make("password"),
+//         "role" => 1
+//     ]);
+//     User::create([
+//         "name"=> "ahmed",
+//         "email" => "ahmed@fitfusion.com",
+//         "password" =>  Hash::make("password"),
+//         "role" => 1
+//     ]);
+// });
 
 
 Route::prefix("v1")->namespace("App\Http\Controllers\Api\V1")->group(function () {

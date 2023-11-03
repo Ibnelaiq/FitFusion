@@ -18,7 +18,8 @@ class Classes extends ResourceCollection
             return [
                 'id' => $item->id,
                 'name' => $item->name,
-                'duration' => $item->duration
+                'duration' => $item->duration,
+                'image_url'=> "/storage/". $item->image_url
             ];
         });
     }
