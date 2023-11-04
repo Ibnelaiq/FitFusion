@@ -21,17 +21,16 @@ class WorkoutsController extends Controller
         $search_keyword = $request->search_keyword;
 
         if($search_keyword != ""){
-            $search_keyword = "%". $search_keyword ."%";
-
-            $workouts = Workouts::where('name', 'like', $search_keyword)->get();
-
-        }else{
-            $workouts = Workouts::whereHas('activatedMuscles', function ($query) use ($activatedMuscleCodes) {
-                $query->whereIn('code', $activatedMuscleCodes);
-            })->get();
+            return new WorkoutsResource(Workouts::where('name', 'like', "%". $search_keyword ."%")->get());
         }
 
-        return new WorkoutsResource($workouts);
+        if(!$activatedMuscleCodes){
+            return new WorkoutsResource(Workouts::all());
+        }
+
+        return new WorkoutsResource(Workouts::whereHas('activatedMuscles', function ($query) use ($activatedMuscleCodes) {
+            $query->whereIn('code', $activatedMuscleCodes);
+        })->get());
     }
 
     /**
