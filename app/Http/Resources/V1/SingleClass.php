@@ -20,7 +20,8 @@ class SingleClass extends JsonResource
             "price" => $this->price,
             "description" => $this->description,
             "timings" => new ClassTimings($this->timings),
-            "rating"  => $this->rating
+            "rating"  => $this->rating,
+            "video_url"   => $this->video_url
         ];
     }
 }

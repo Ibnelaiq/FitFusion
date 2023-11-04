@@ -15,7 +15,7 @@ class Classes extends Model
     const STATUS_INACTIVE = 0;
 
     protected $fillable = [
-        "name","duration", "description", "price", "rating", "image_url", "status"];
+        "name","duration", "description", "price", "rating", "image_url", "status", "video_url"];
     public function timings(){
         return $this->hasMany(ClassesTimings::class);
     }

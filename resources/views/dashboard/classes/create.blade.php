@@ -41,6 +41,13 @@
                     <p class="text-red-500 text-sm mt-1">{{ $errors->first('duration') }}</p>
                 @endif
             </div>
+            <div class="mb-4">
+                <label for="video_url" class="block text-sm font-medium text-gray-600">Video Url:</label>
+                <input type="text" id="video_url" name="video_url" class="mt-1 p-2 w-full border rounded-md {{ $errors->has('video_url') ? 'border-red-500' : 'border-gray-300' }}" required>
+                @if($errors->has('video_url'))
+                    <p class="text-red-500 text-sm mt-1">{{ $errors->first('video_url') }}</p>
+                @endif
+            </div>
 
             <div class="mb-4 hidden">
                 <label for="rating" class="block text-sm font-medium text-gray-600">Rating:</label>

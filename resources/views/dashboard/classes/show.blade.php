@@ -8,6 +8,10 @@
         <p><strong>Description:</strong> {{ $class->description }}</p>
         <p><strong>Price:</strong> {{ $class->price }}</p>
         <p><strong>Rating:</strong> {{ $class->rating }}</p>
+        <p>
+            <strong>Video:</strong>
+            <a href="{{ $class->video_url }}" target="_blank"> View </a>
+        </p>
 
 
         <table class="min-w-full text-left text-sm font-light">

@@ -35,7 +35,7 @@ class ClassesController extends Controller
             'price' => 'required|numeric',
             'rating' => 'required|integer',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Add validation for image file
-
+            'video_url' => 'required|url'
         ]);
 
         $class = Classes::create($request->all());
@@ -67,11 +67,11 @@ class ClassesController extends Controller
 
         // Validate the request
         $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'duration' => 'required|string|max:255',
+            'name'        => 'required|string|max:255',
+            'duration'    => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|numeric',
-            'rating' => 'required|integer',
+            'price'       => 'required|numeric',
+            'video_url'   => 'required|url'
         ]);
 
         // Update the class

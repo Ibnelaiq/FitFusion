@@ -31,11 +31,13 @@
                 <input type="text" id="duration" name="duration" value="{{ $class->duration }}" class="mt-1 p-2 w-full border rounded-md">
             </div>
 
-            <!-- Class Rating -->
+            <!-- Video URL  -->
             <div class="mb-4">
-                <label for="rating" class="block text-sm font-medium text-gray-600">Rating:</label>
-
+                <label for="video_url" class="block text-sm font-medium text-gray-600">Video URL:</label>
+                <input type="text" id="video_url" name="video_url" value="{{ $class->video_url }}" class="mt-1 p-2 w-full border rounded-md">
             </div>
+
+            <!-- Class Rating -->
             <div class="mb-4">
                 <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300">Save Changes</button>
 
