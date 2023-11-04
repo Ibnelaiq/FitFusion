@@ -31,9 +31,6 @@ class WorkoutsController extends Controller
             })->get();
         }
 
-
-
-
         return new WorkoutsResource($workouts);
     }
 

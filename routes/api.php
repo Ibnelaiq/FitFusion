@@ -60,7 +60,10 @@ Route::prefix("v1")->namespace("App\Http\Controllers\Api\V1")->group(function ()
         Route::resource('customers', CustomerController::class)->except(["store"]);
         Route::resource('membership', CustomerMembershipsController::class);
         Route::resource('classes', ClassesController::class);
-        Route::resource('workouts', WorkoutsController::class);
+        Route::resource('workouts', WorkoutsController::class, ["except" => ["index", "store"]]);
+
+        Route::post("/workouts", [WorkoutsController::class ,"index"]);
+
     });
 
     Route::get("/slider", [FrontPageController::class, "sliderImages"]);
