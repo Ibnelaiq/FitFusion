@@ -14,8 +14,13 @@ class ClassesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request->search_keyword){
+            return new \App\Http\Resources\V1\Classes(Classes::where('name', 'like', "%". $request->search_keyword ."%")->where([
+                "status" => Classes::STATUS_ACTIVE,
+            ])->get());
+        }
         return new \App\Http\Resources\V1\Classes(Classes::where([
             "status" => Classes::STATUS_ACTIVE
         ])->get());

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\WorkoutsController;
 use App\Models\V1\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,5 +70,15 @@ Route::prefix("v1")->namespace("App\Http\Controllers\Api\V1")->group(function ()
 
 
 
+
+});
+
+
+Route::get('/sendmail', function (Request $request) {
+
+    Mail::raw('Hi user, a new login into your account from the IP Address: ', function ($message) {
+        $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+        $message->to('abdulwahabfaiz@gmail.com', 'Ahmed Ali');
+    });
 
 });

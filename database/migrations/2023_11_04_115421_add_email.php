@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('promotion_sliders', function (Blueprint $table) {
-            $table->text('description')->nullable()->after("id");
-            $table->string('title')->nullable()->after("id");
+        Schema::table('customers', function (Blueprint $table) {
+            $table->string('email')->after('surname')->nullable();
         });
     }
 
@@ -22,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('promotion_sliders', function (Blueprint $table) {
+        Schema::table('customers', function (Blueprint $table) {
             //
         });
     }

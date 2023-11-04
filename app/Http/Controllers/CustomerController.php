@@ -89,7 +89,8 @@ class CustomerController extends Controller
     public function customerPaymentAssignCode(Assign5DigitCodeCustomerRequest $request,Customer $customer){
 
 
-        $res = $this->customerAuthRepository->confirmPaymentAndAssignPassCode($customer,$request->code);
+
+        $res = $this->customerAuthRepository->confirmPaymentAndAssignPassCode($customer,$request->code, $request->email);
 
         if($res){
             return redirect()->route('dashboard')->with('successMessage', "Code Set Successfully");

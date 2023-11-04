@@ -22,7 +22,8 @@ class Assign5DigitCodeCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "code" => "required|digits:5"
+            "code" => "required|digits:5",
+            "email" => "required|email"
         ];
     }
 }

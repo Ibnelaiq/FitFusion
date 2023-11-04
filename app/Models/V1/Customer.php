@@ -25,6 +25,7 @@ class Customer extends Model
         "passport_or_id",
         "birth_date",
         "gender",
+        "email"
     ];
 
     public function activeSubscription(){

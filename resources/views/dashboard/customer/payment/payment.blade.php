@@ -10,12 +10,36 @@
 
         <form action="{{ route('customer.payment', ['customer' => $customer->id]) }}" method="post" class="mt-6">
             @csrf
-            <label for="code" class="block text-sm font-medium text-gray-600">Enter 5-Digit Code:</label>
-            <input type="text" id="code" name="code" class="mt-1 p-2 block w-full rounded-md border {{ $errors->has('code') ? 'border-red-500' : 'border-gray-300' }} focus:outline-none focus:ring focus:ring-indigo-200" required>
-            @if($errors->has('code'))
-                <p class="text-red-500 text-sm mt-1">{{ $errors->first('code') }}</p>
+
+            <label for="email" class="block text-sm font-medium text-gray-600">Customer Email:</label>
+            <input type="text" id="email" name="email" class="d-none mt-1 p-2 block w-full rounded-md border {{ $errors->has('email') ? 'border-red-500' : 'border-gray-300' }} focus:outline-none focus:ring focus:ring-indigo-200" required>
+            @if($errors->has('email'))
+                <p class="text-red-500 text-sm mt-1">{{ $errors->first('email') }}</p>
             @endif
+
+            <div style="display:none">
+                <label for="code" class="block text-sm font-medium text-gray-600">Enter 5-Digit Code:</label>
+                <input type="text" id="code" name="code" class="d-none mt-1 p-2 block w-full rounded-md border {{ $errors->has('code') ? 'border-red-500' : 'border-gray-300' }} focus:outline-none focus:ring focus:ring-indigo-200" required>
+                @if($errors->has('code'))
+                    <p class="text-red-500 text-sm mt-1">{{ $errors->first('code') }}</p>
+                @endif
+            </div>
             <button type="submit" class="mt-4 py-2 px-4 bg-gray-800 hover:bg-gray-700 text-white rounded-md transition duration-300">Submit</button>
         </form>
     </div>
 </x-app-layout>
+<script>
+
+function generateRandomCode() {
+    var min = 10000;
+    var max = 99999;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+var inputField = document.getElementById("code");
+var randomCode = generateRandomCode();
+
+inputField.value = randomCode;
+
+</script>
