@@ -22,8 +22,8 @@ class FetchAllRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // "activated_muscle" => "required_without:search_keyword|array",
-            // "search_keyword" => "required_without:activated_muscle|string",
+            "activated_muscle" => "required_without:search_keyword|array",
+            "search_keyword" => "required_without:activated_muscle|string",
         ];
     }
 }
