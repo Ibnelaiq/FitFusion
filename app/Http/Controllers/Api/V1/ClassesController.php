@@ -16,6 +16,8 @@ class ClassesController extends Controller
      */
     public function index(Request $request)
     {
+        dd($request);
+
         if($request->search_keyword){
             return new \App\Http\Resources\V1\Classes(Classes::where('name', 'like', "%". $request->search_keyword ."%")->where([
                 "status" => Classes::STATUS_ACTIVE,
