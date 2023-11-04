@@ -22,7 +22,9 @@ class StorePromotionSliderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "image" => "image|mimes:png,jpg,jpeg"
+            "image" => "image|mimes:png,jpg,jpeg",
+            "title" => "required|string",
+            "description" => "required|max:400"
         ];
     }
 }

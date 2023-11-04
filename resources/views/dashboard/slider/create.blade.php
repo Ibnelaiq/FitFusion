@@ -7,6 +7,22 @@
             @csrf
 
             <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-600">Title:</label>
+                <input type="text" id="name" name="title" class="mt-1 p-2 w-full border rounded-md {{ $errors->has('title') ? 'border-red-500' : 'border-gray-300' }}" required>
+                @if($errors->has('name'))
+                    <p class="text-red-500 text-sm mt-1">{{ $errors->first('title') }}</p>
+                @endif
+            </div>
+
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-600">Description:</label>
+                <input type="text" id="description" name="description" class="mt-1 p-2 w-full border rounded-md {{ $errors->has('description') ? 'border-red-500' : 'border-gray-300' }}" required>
+                @if($errors->has('description'))
+                    <p class="text-red-500 text-sm mt-1">{{ $errors->first('description') }}</p>
+                @endif
+            </div>
+
+            <div class="mb-4">
                 <label for="image" class="block text-sm font-medium text-gray-600">Image:</label>
                 <input type="file" id="image" name="image" class="mt-1 p-2 w-full border rounded-md {{ $errors->has('image') ? 'border-red-500' : 'border-gray-300' }}">
                 @if($errors->has('image'))

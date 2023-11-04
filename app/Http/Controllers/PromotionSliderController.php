@@ -35,6 +35,8 @@ class PromotionSliderController extends Controller
         $slider = PromotionSlider::create([
             "url" => "",
             "status" => 1,
+            "title" => $request->title,
+            "description" => $request->description,
         ]);
 
         $imagePath = $request->file('image')->storeAs('images/promotionSlider', $slider->id . '.' . $request->file('image')->getClientOriginalExtension(), 'public');

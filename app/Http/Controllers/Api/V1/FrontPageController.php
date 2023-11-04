@@ -36,7 +36,7 @@ class FrontPageController extends Controller
 
         $slider = PromotionSlider::where([
             "status" => 1
-        ])->select(["url"])->get();
+        ])->select(["title","description","url"])->get();
 
         return new GeneralSingleResource($slider);
     }

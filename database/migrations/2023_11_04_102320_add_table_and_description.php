@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('classes', function (Blueprint $table) {
-            $table->string('video_url')->nullable();
+        Schema::table('promotion_sliders', function (Blueprint $table) {
+            $table->text('description')->nullable()->after("id");
+            $table->string('title')->nullable()->after("id");
+
         });
     }
 
@@ -21,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('Classes', function (Blueprint $table) {
+        Schema::table('promotion_sliders', function (Blueprint $table) {
             //
         });
     }
