@@ -15,7 +15,7 @@ class WorkoutResource extends JsonResource
     public function toArray(Request $request): array
     {
 
-        $folderPath = storage_path("app\\public\\images\\workouts\\" . $this->id);
+        $folderPath = storage_path("app/public/images/workouts/" . $this->id);
 
         $files = array_diff(scandir($folderPath), array('.', '..'));
 
