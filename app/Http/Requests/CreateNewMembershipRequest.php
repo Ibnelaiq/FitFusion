@@ -22,7 +22,8 @@ class CreateNewMembershipRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "membership_duration" => "required"
+            "membership_duration" => "required",
+            "email" => "email|required"
         ];
     }
 }

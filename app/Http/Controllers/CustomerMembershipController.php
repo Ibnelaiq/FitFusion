@@ -6,7 +6,9 @@ use App\Http\Requests\CreateNewMembershipRequest;
 use App\Http\Requests\CustomerMembershipExtendRequest;
 use App\Http\Requests\PauseCustomerMembershipRequest;
 use App\Models\V1\Customer;
+use App\Models\V1\CustomerAuth;
 use App\Models\V1\CustomerMemberships;
+use App\Repositories\CustomerAuthRepository;
 use App\Repositories\CustomerMembershipRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,10 +17,12 @@ class CustomerMembershipController extends Controller
 {
 
     protected $customerMembershipRepository;
+    protected $customerAuthRepository;
 
-    public function __construct(CustomerMembershipRepository $customerMembershipRepository)
+    public function __construct(CustomerMembershipRepository $customerMembershipRepository, CustomerAuthRepository $customerAuthRepository)
     {
         $this->customerMembershipRepository = $customerMembershipRepository;
+        $this->customerAuthRepository = $customerAuthRepository;
     }
 
     public function extend(CustomerMemberships $membership){
@@ -89,12 +93,42 @@ class CustomerMembershipController extends Controller
     }
     public function createMembership(Customer $customer, CreateNewMembershipRequest $request){
 
+
+        // First time
+        if(!$customer->email){
+            $customer->update(["email"=> $request->email]);
+        }
+
+        dd($this->customerAuthRepository->SendCodeViaEmail($customer));
+
         if($customer->activeSubscription){
             return redirect()->route('dashboard')->with('errorMessage', "Unknown Error Occured");
         }
 
         try{
-            $this->customerMembershipRepository->createMembership($customer,$request->membership_duration);
+
+            if(!$this->customerMembershipRepository->createMembership($customer,$request->membership_duration))
+                return;
+
+            $code = rand(pow(10, 5-1), pow(10, 5)-1);
+
+            if($customer->auth){
+                $customer->auth->update([
+                    "code" => $code
+                ]);
+            }else{
+
+                $auth = new CustomerAuth;
+
+                $auth->customer_id = $customer->id;
+                $auth->code = $code;
+
+                $auth->save();
+            }
+
+            $this->customerAuthRepository->SendCodeViaEmail($customer);
+
+
             return redirect()->route('dashboard')->with('successMessage', "Membership Paused Action Added Successfully");
 
         }catch(\Exception $e){

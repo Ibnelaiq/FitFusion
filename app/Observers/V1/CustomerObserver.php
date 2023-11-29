@@ -13,11 +13,11 @@ class CustomerObserver
      */
     public function created(Customer $customer): void
     {
-        CustomerMemberships::create([
-            'customer_id' => $customer->id,
-            'expiry_date' => Carbon::today()->addMonth(),
-            'status'      => CustomerMemberships::STATUS_INACTIVE,
-        ]);
+        // CustomerMemberships::create([
+        //     'customer_id' => $customer->id,
+        //     'expiry_date' => Carbon::today()->addMonth(),
+        //     'status'      => CustomerMemberships::STATUS_INACTIVE,
+        // ]);
     }
 
     /**
