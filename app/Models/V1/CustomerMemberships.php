@@ -3,6 +3,7 @@
 namespace App\Models\V1;
 
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,6 +37,56 @@ class CustomerMemberships extends Model
             }
         }
     }
+    public function formattedExpiryDate(){
+        return Carbon::parse($this->expiry_date)->format('F j, Y');
+    }
+    public function calculateProgress()
+    {
+        if( in_array( $this->status, [self::STATUS_EXPIRED, self::STATUS_CANCELLED]))
+            return -1;
+
+        $expiryDate = Carbon::parse($this->expiry_date)->startOfDay();
+        $createdAt = Carbon::parse($this->created_at)->startOfDay();
+
+        $currentDate = ($this->status == self::STATUS_PAUSED ? $currentDate = Carbon::parse($this->paused_at) : Carbon::now())->startOfDay();
+
+        $currentDate = $currentDate->between($createdAt, $expiryDate) ? $currentDate : $createdAt;
+
+        // Calculate the progress in percentage
+        $totalDuration = $expiryDate->diffInDays($createdAt);
+        $elapsedDuration = $currentDate->diffInDays($createdAt);
+        $progressPercentage = ($elapsedDuration / $totalDuration) * 100;
+
+        return round($progressPercentage);
+    }
+
+    public function duration(){
+        $expiryDate = Carbon::parse($this->expiry_date)->startOfDay();
+        $createdAt = Carbon::parse($this->created_at)->startOfDay();
+
+        $remainingTime = $createdAt->diff($expiryDate);
+
+        $years = $remainingTime->y;
+        $months = $remainingTime->m;
+        $days = $remainingTime->d;
+
+        $humanReadable = '';
+
+        if ($years > 0) {
+            $humanReadable .= $years . ' year' . ($years > 1 ? 's ' : ' ');
+        }
+
+        if ($months > 0) {
+            $humanReadable .= $months . ' month' . ($months > 1 ? 's ' : ' ');
+        }
+
+        if ($days > 0) {
+            $humanReadable .= $days . ' day' . ($days > 1 ? 's ' : ' ');
+        }
+
+        return $humanReadable;
+    }
+
 
     public function customer(){
         return $this->belongsTo(Customer::class);
@@ -45,15 +96,15 @@ class CustomerMemberships extends Model
     {
         switch ($this->status) {
             case self::STATUS_ACTIVE:
-                return 'Active';
+                return '<span class="badge badge-sm bg-success"> Active </span>';
             case self::STATUS_INACTIVE:
-                return 'Inactive';
+                return '<span class="badge badge-sm bg-secondary"> Inactive </span>';
             case self::STATUS_EXPIRED:
-                return 'Expired';
+                return '<span class="badge badge-sm bg-danger"> Expired </span>';
             case self::STATUS_PAUSED:
-                return 'Paused <br> <small class="text-xs"> Balance Days: '. $this->balance_days .' </small> <br> <small class="text-xs"> Paused At: '. $this->paused_at .' </small>';
+                return '<span class="badge badge-sm bg-warning"> Paused </span> <br> <small class="text-xs"> Balance Days: '. $this->balance_days .' </small> <br> <small class="text-xs"> Paused At: '. $this->paused_at .' </small>';
             case self::STATUS_CANCELLED:
-                return 'Cancelled';
+                return '<span class="badge badge-sm bg-danger"> Cancelled </span>';
             default:
                 return 'Unknown';
         }

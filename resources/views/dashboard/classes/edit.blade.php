@@ -1,7 +1,19 @@
-<x-app-layout>
-    <div class="mt-4 p-6 max-w-[80%] mx-auto bg-white rounded shadow-md">
+@push("pageCustomScript")
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css')}}">
+<style>
 
-        <h2 class="text-2xl font-semibold mb-4">Edit Class: {{ $class->name }}</h2>
+    .select2-container{
+        width: auto!important;
+        flex: 1;
+    }
+</style>
+@endpush
+
+<x-app-layout>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-0"><span class="text-light"> Class /</span> Edit </h5>
 
         <form method="POST" action="{{ route('classes.update', ['class' => $class]) }}">
             @csrf
@@ -39,59 +51,70 @@
 
             <!-- Class Rating -->
             <div class="mb-4">
-                <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300">Save Changes</button>
-
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
         </form>
             </div>
+            <hr>
 
-            <div class="w-100 mb-4">
+            <div class="container">
 
-                <form method="POST" class="flex" action="{{ route('classesTimings.store', ['class' => $class]) }}">
+                <form method="POST" action="{{ route('classesTimings.store', ['class' => $class]) }}">
                     @csrf
-                    <select id="rating" name="slot" class="flex mt-1 p-2 w-full border rounded-md">
-                        @foreach ($classesSlots as $slot)
-                            <option value="{{ $slot->id}}" > {{ $slot->start }} - {{$slot->end}}</option>
-                        @endforeach
-                    </select>
+                    <div class="input-group">
+                        <select id="rating" name="slot" class="form-control"  aria-describedby="add-class-timing" style="flex: 1;">
+                            @foreach ($classesSlots as $slot)
+                                <option value="{{ $slot->id}}" > {{ $slot->start }} - {{$slot->end}}</option>
+                            @endforeach
+                        </select>
 
-                    <button type="submit" class="w-1/3 bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300">Add Class Timings</button>
+                        <button type="submit"
+                        class="btn btn-outline-primary waves-effect"
+                        id="add-class-timing"
+                        >Add Class Timings</button>
+                    </div>
                 </form>
             </div>
 
-            <table class="min-w-full text-left text-sm font-light">
-                <thead class="border-b font-medium dark:border-neutral-500">
-                <tr>
-                    <th scope="col" class="px-6 py-4">#</th>
-                    <th scope="col" class="px-6 py-4">Slot Start</th>
-                    <th scope="col" class="px-6 py-4">Slot End  </th>
-                    <th scope="col" class="px-6 py-4">Action</th>
+            <div class="container">
+                <table class="table">
+                    <thead class="border-b font-medium dark:border-neutral-500">
+                    <tr>
+                        <th scope="col" class="px-6 py-4">#</th>
+                        <th scope="col" class="px-6 py-4">Slot Start</th>
+                        <th scope="col" class="px-6 py-4">Slot End  </th>
+                        <th scope="col" class="px-6 py-4">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                @foreach ($class->timings as $timing)
+                <tr class="border-b-2 p-16" >
+                    <td> {{ $timing->id }} </td>
+                    <td> {{ $timing->slot->start }} </td>
+                    <td> {{ $timing->slot->end }} </td>
+                    <td>
+                        <a href="{{ route('classesTimings.destroy', ['classesTiming'=>$timing]) }}" class="delete-btn">
+                            <button
+                            class="btn btn-outline-danger"
+                            >Delete</button>
+                        </a>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
+                @endforeach
 
 
-            @foreach ($class->timings as $timing)
-            <tr class="border-b-2 p-16" >
-                <td> {{ $timing->id }} </td>
-                <td> {{ $timing->slot->start }} </td>
-                <td> {{ $timing->slot->end }} </td>
-                <td>
-                    <a href="{{ route('classesTimings.destroy', ['classesTiming'=>$timing]) }}" class="delete-btn">
-                        <button
-                        class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300 "
-                        >Delete</button>
-                    </a>
-                </td>
-            </tr>
-            @endforeach
+            </tbody>
+        </table>
 
-
-        </tbody>
-    </table>
+            </div>
 
             <!-- Save Button -->
-
+            <br>
     </div>
+
+    <br> <br>
 
     <script>
        document.addEventListener('DOMContentLoaded', function() {
@@ -159,5 +182,11 @@
     });
     </script>
 
+@push("pageCustomScript")
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script>
+         $('#rating').select2();
+    </script>
+@endpush
 
 </x-app-layout>

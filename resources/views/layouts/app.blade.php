@@ -1,62 +1,213 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
+    data-template="horizontal-menu-template" lang="en">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <script src="https://kit.fontawesome.com/7effce4453.js" crossorigin="anonymous"></script>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/7effce4453.js') }}" crossorigin="anonymous"></script>
+
+    <!-- Scripts -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/fontawesome.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/tabler-icons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}"
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/swiper/swiper.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/cards-advance.css') }}" />
+
+    @stack('pageCustomStyle')
+
+    <!-- Helpers -->
+    <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+    {{-- <script src="{{ asset('assets/vendor/js/template-customizer.js') }}"></script> --}}
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{{ asset('assets/js/config.js') }}"></script>
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
+        <div class="layout-container">
+            <!-- Navbar -->
+
+
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-
-                </header>
+                @dump($header)
             @endif
+
+
+
 
 
             <!-- Page Content -->
             <main>
-                @if(session('successMessage'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 relative" role="alert">
-                        <span class="block sm:inline">{{ session('successMessage') }}</span>
-                    </div>
-                @endif
-                @if(session('success'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 relative" role="alert">
-                        <span class="block sm:inline">{{ session('success') }}</span>
-                    </div>
-                @endif
-                @if(session('errorMessage'))
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 relative" role="alert">
-                        <span class="block sm:inline">{{ session('errorMessage') }}</span>
-                    </div>
-                @endif
-                @if(session('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 relative" role="alert">
-                    <span class="block sm:inline">{{ session('error') }}</span>
-                </div>
-            @endif
-                {{ $slot }}
+
+                <!-- Layout container -->
+                <div class="layout-page">
+
+                    <!-- Content wrapper -->
+                    <div class="content-wrapper">
+                        @if (session('success'))
+                            <div class="container">
+
+                                <div class="alert alert-success alert-dismissible d-flex align-items-baseline"
+                                    role="alert">
+                                    <span class="alert-icon alert-icon-lg text-success me-2">
+                                        <i class="ti ti-check ti-sm"></i>
+                                    </span>
+                                    <div class="d-flex flex-column ps-1">
+                                        <h5 class="alert-heading mb-2">{{ session('success') }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if (session('successMessage'))
+                        <div class="container">
+
+                            <div class="alert alert-success alert-dismissible d-flex align-items-baseline"
+                                role="alert">
+                                <span class="alert-icon alert-icon-lg text-success me-2">
+                                    <i class="ti ti-check ti-sm"></i>
+                                </span>
+                                <div class="d-flex flex-column ps-1">
+                                    <h5 class="alert-heading mb-2">{{ session('successMessage') }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                        @if (session('errorMessage'))
+                        <div class="container">
+
+                            <div class="alert alert-danger alert-dismissible d-flex align-items-baseline"
+                                role="alert">
+                                <span class="alert-icon alert-icon-lg text-danger me-2">
+                                    <i class="ti ti-check ti-sm"></i>
+                                </span>
+                                <div class="d-flex flex-column ps-1">
+                                    <h5 class="alert-heading mb-2">{{ session('errorMessage') }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="container">
+
+                            <div class="alert alert-danger alert-dismissible d-flex align-items-baseline"
+                                role="alert">
+                                <span class="alert-icon alert-icon-lg text-danger me-2">
+                                    <i class="ti ti-check ti-sm"></i>
+                                </span>
+                                <div class="d-flex flex-column ps-1">
+                                    <h5 class="alert-heading mb-2">{{ session('error') }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                        <!-- Menu -->
+
+
+                        {{ $slot }}
+
 
             </main>
         </div>
-    </body>
+</body>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+
+<!-- Drag Target Area To SlideIn Menu On Small Screens -->
+<div class="drag-target"></div>
+
+<!--/ Layout wrapper -->
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
+
+<script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
+<script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/node-waves/node-waves.js') }}"></script>
+
+<script src="{{ asset('assets/vendor/libs/hammer/hammer.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/i18n/i18n.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+
+<script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/swiper/swiper.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+
+<!-- Main JS -->
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
+<!-- Page JS -->
+<script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
+
+@stack('pageCustomScript')
+
+
 </html>

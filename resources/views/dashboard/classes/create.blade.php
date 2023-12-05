@@ -1,7 +1,11 @@
 <x-app-layout>
-    <div class="mt-4 p-6 max-w-[80%] mx-auto bg-white rounded shadow-md">
 
-        <h2 class="text-2xl font-semibold mb-4">Add New Class</h2>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-0"><span class="text-light"> Class /</span> Add </h5>
+
+
 
         <form method="POST" action="{{ route('classes.store') }}" enctype="multipart/form-data">
             @csrf
@@ -75,7 +79,7 @@
 
             <!-- Save Button -->
             <div class="mb-4">
-                <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300">Add Class</button>
+                <button type="submit" class="btn btn-primary">Add Class</button>
             </div>
         </form>
     </div>

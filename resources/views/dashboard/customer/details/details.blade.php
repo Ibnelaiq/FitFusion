@@ -1,6 +1,18 @@
 <x-app-layout>
-    <div class="mt-4 p-6 max-w-2xl mx-auto bg-white rounded shadow-md">
-        <h2 class="text-2xl font-semibold mb-4">Customer Detail:</h2>
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+        <!-- DataTable with Buttons -->
+        <div class="card">
+            <div class="card-datatable table-responsive pt-0">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="card-header flex-column flex-md-row">
+                        <div class="head-label text-center">
+                            <h5 class="card-title mb-0"><span class="text-light"> Customers /</span> Detail</h5>
+                        </div>
+
+                    </div>
+
+                <div class="container">
         <p><strong>ID:</strong> {{ $customer->id }}</p>
         <p><strong>Name:</strong> {{ $customer->name }}</p>
         <p><strong>Surname:</strong> {{ $customer->surname }}</p>

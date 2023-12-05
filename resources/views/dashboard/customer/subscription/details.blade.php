@@ -1,73 +1,108 @@
 <x-app-layout>
-    <div class="mt-8 p-6 max-w-6xl mx-auto bg-white rounded-lg shadow-md">
-        @foreach ($memberships as $membership)
-            <div class="border-b-2 border-gray-200 mb-6 pb-6">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <p class="text-gray-600 font-semibold">Status:</p>
-                        <p style="line-height:12px" class="text-lg {{ $membership->status == 1 ? 'text-green-600' : ($membership->status == 2 ? 'text-orange-600' : 'text-red-600') }}">
-                           {!! $membership->getStatus() !!}
-                        </p>
-                    </div>
-                    <div>
-                        <p class="text-gray-600 font-semibold">Created at:</p>
-                        <p class="text-gray-900">{{ $membership->created_at->format('M d, Y') }}</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-600 font-semibold">Expiry Date:</p>
 
-                        @if ( in_array($membership->status,[999,950]))
-                            <p class="text-red-600">Cancelled</p>
-                        @else
-                            <p class="text-gray-900">{{ $membership->expiry_date }}</p>
-                        @endif
 
-                    </div>
+    <div class="container-xxl flex-grow-1 container-p-y">
 
-                    @if ($membership->status == 1)
-                        <div class="flex items-center space-x-4 gap-4">
-                            <a href="{{ route('customer.membership.pause', ['membership'=> $membership->id]) }}"
-                                class="bg-orange-500 hover:bg-orange-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                                Pause
-                            </a>
-                            <a href="{{ route('customer.membership.extend', ['membership'=> $membership->id]) }}"
-                                class="bg-gray-500 hover:bg-slate-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                                Extend
-                            </a>
-                            <a href="{{ route('customer.membership.cancel', ['membership'=> $membership->id]) }}"
-                                class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                                Cancel
-                            </a>
+        <div class="card mb-4">
+            <h5 class="card-header">Customer's Subscription List</h5>
+            <div class="table-responsive mb-3">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+
+                    <table class="table datatable-project border-top dataTable no-footer dtr-column"
+                        id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 923px;">
+                        <thead>
+                            <tr>
+                                <th class="" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 343px;">
+                                    Subscription</th>
+                                <th class="text-nowrap sorting_disabled" rowspan="1" colspan="1"
+                                    style="width: 156px;" aria-label="Total Task">Expiry</th>
+                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width: 146px;"
+                                    aria-label="Progress: activate to sort column ascending">Progress</th>
+                                <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 106px;"
+                                    aria-label="Hours">Status</th>
+                                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 106px;"
+                                    aria-label="Hours">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($memberships as $membership)
+                            <tr class="odd">
+                                <td class="  control" tabindex="0" style="display: none;"></td>
+                                <td class="sorting_1">
+                                    <div class="d-flex justify-content-left align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <span class="text-truncate fw-bold">
+                                                {{ $membership->duration()}}
+                                            </span>
+                                            <small class="text-muted" style="font-size:0.55rem">
+                                                {{ $membership->created_at}}
+                                            </small></div>
+                                    </div>
+                                </td>
+                                <td>{{ $membership->formattedExpiryDate() }} </td>
+                                <td>
+                                    @if ($membership->calculateProgress() == -1)
+                                    <div class="text-center">
+                                        -
+                                    </div>
+                                    @else
+                                    <div class="d-flex flex-column"><small class="mb-1">{{ $membership->calculateProgress()}}%</small>
+                                        <div class="progress w-100 me-3" style="height: 6px;">
+                                            <div class="progress-bar bg-success" style="width: {{ $membership->calculateProgress()}}%" aria-valuenow="{{ $membership->calculateProgress()}}%"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    @endif
+
+                                </td>
+                                <td>
+                                    {!!$membership->getStatus()!!}
+                                </td>
+                                <td>
+                                    @if ($membership->status == 1)
+                                    <div class="flex items-center space-x-4 gap-4">
+                                        <a href="{{ route('customer.membership.pause', ['membership' => $membership->id]) }}"
+                                            class="btn btn-sm btn-outline-primary waves-effect">
+                                            Pause
+                                        </a>
+                                        <a href="{{ route('customer.membership.extend', ['membership' => $membership->id]) }}"
+                                            class="btn btn-sm btn-outline-secondary waves-effect">
+                                            Extend
+                                        </a>
+                                        <a href="{{ route('customer.membership.cancel', ['membership' => $membership->id]) }}"
+                                            class="btn btn-sm btn-outline-danger waves-effect">
+                                            Cancel
+                                        </a>
+                                    </div>
+                                @else
+                                    @if ($membership->status == 901)
+                                        <a href="{{ route('customer.membership.resume', ['membership' => $membership->id]) }}"
+                                            class="btn btn-sm btn-outline-primary waves-effect">
+                                            Un Pause
+                                        </a>
+                                    @else
+                                    <div class="text-center">
+                                        -
+                                    </div>
+                                    @endif
+
+                                @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between mx-4 row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
+                                aria-live="polite">Showing {{ count($memberships)}} entries</div>
                         </div>
-                    @else
-                    <div class="flex items-center space-x-4 gap-4">
-                        <a
-                            class="opacity-75 bg-orange-500 hover:bg-orange-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                            Pause
-                        </a>
-                        <a
-                            class="opacity-75 bg-gray-500 hover:bg-slate-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                            Extend
-                        </a>
-                        <a
-                            class="opacity-75 bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                            Cancel
-                        </a>
-                        @if ($membership->status == 901)
-                        <a href="{{ route('customer.membership.resume', ['membership'=> $membership->id]) }}"
-                            class="bg-green-700 hover:bg-green-900 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                            Un-Pause
-                        </a>
-                        @endif
                     </div>
-                    @endif
-
-
                 </div>
-
             </div>
-        @endforeach
-
+        </div>
     </div>
-</x-app-layout>
 
+</x-app-layout>

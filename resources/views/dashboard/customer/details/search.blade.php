@@ -1,24 +1,60 @@
 <x-app-layout>
-    <div class="w-full mt-8">
-        <div class="flex justify-center">
-            <div class="w-2/3">
-                <form action="{{ route('customer.searchDetails') }}" method="GET">
-                    <div class="flex items-center border-b border-b-2 border-gray-500 py-2">
-                        <input type="date" name="birth_date" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Search by birth date">
-                        <input type="text" name="name" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Search by name">
-                        <input type="text" name="surname" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Search by surname">
-                        <input type="text" name="passport_or_id" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Search by passport or ID">
-                        <input type="text" name="phone_number" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Search by phone number">
+    <div class="container-xxl flex-grow-1 container-p-y">
 
-                        <button type="submit" class="flex-shrink-0 bg-gray-500 hover:bg-gray-700 border-gray-500 hover:border-gray-700 text-sm border-4 text-white py-1 px-2 rounded">Search</button>
+        <!-- DataTable with Buttons -->
+        <div class="card">
+            <div class="card-datatable table-responsive pt-0">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="card-header flex-column flex-md-row">
+                        <div class="head-label text-center">
+                            <h5 class="card-title mb-0"><span class="text-light"> Customers /</span> All</h5>
+                        </div>
+
                     </div>
-                </form>
-            </div>
-        </div>
 
-        <div class="mt-8 flex justify-center">
+                <div class="container">
+
+                    <form action="{{ route('customer.searchDetails') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="date" name="birth_date" class="form-control" placeholder="Search by birth date">
+                            <input type="text" name="name" class="form-control" placeholder="Search by name">
+                            <input type="text" name="surname" class="form-control" placeholder="Search by surname">
+                            <input type="text" name="passport_or_id" class="form-control" placeholder="Search by passport or ID">
+                            <input type="text" name="phone_number" class="form-control" placeholder="Search by phone number">
+                            <button type="submit" class="btn btn-primary waves-effect">Search</button>
+
+                        </div>
+                    </form>
+
+                    <hr>
+                    <br>
+                    <div class="col-12">
+                        <ul class="list-group">
+                            @forelse ($customers as $customer)
+                                <li class="list-group-item d-flex justify-content-between flex-column flex-sm-row">
+                                <div class="offer">
+                                  <p class="mb-0 fw-bold">{{ $customer->name }}</p>
+                                  <p class="mb-0"> <small>Passport Or ID: <b>{{ $customer->passport_or_id }}</b> </small> </p>
+                                  <p class="mb-0"> <small>Phone: <b>{{ $customer->phone_number }}</b> </small> </p>
+                                </div>
+                                <div class="apply mt-3 mt-sm-0">
+                                <a href="{{ route('customer.details', ['customer'=> $customer->id]) }}" class="btn btn-xs btn-outline-primary waves-effect">Show Details</a>
+                                <a href="{{ route('customer.subscription', ['customer'=> $customer->id]) }}" class="btn btn-xs btn-outline-primary waves-effect">Subscriptions</a>
+                                <a href="{{ route('customer.membership.create', ['customer'=> $customer->id]) }}" class="btn btn-xs btn-outline-primary waves-effect">Add New Subscription</a>
+
+                                <a href="{{ route('products.sale.search', ['customer'=> $customer->id]) }}" class="btn btn-xs btn-outline-primary waves-effect">Create Sale</a>
+                            </div>
+                              </li>
+                            @empty
+                            <p class="text-gray-700 mt-4">No results found.</p>
+                            @endforelse
+                        </ul>
+                      </div>
+                </div>
+
+        {{-- <div class="mt-8 flex justify-center">
             <div class="w-2/3">
-                <h2 class="text-3xl font-semibold mb-4">Search Results:</h2>
                 <div class="grid grid-cols-1 gap-4">
                     @forelse ($customers as $customer)
 
@@ -42,6 +78,7 @@
                     @endforelse
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
+
 </x-app-layout>

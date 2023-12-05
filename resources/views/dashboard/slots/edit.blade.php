@@ -1,29 +1,32 @@
 <x-app-layout>
-    <div class="mt-4 p-6 max-w-[80%] mx-auto bg-white rounded shadow-md">
 
-        <h2 class="text-2xl font-semibold mb-4">Edit Slot: {{ $slot->start }} - {{ $slot->end }}</h2>
+                <div class="container">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-0"><span class="text-light"> Slot /</span> Edit </h5>
 
-        <form method="POST" action="{{ route('slots.update', ['slot' => $slot]) }}">
-            @csrf
-            @method('PUT')
+                    <form method="POST" action="{{ route('slots.update', ['slot' => $slot]) }}">
+                        @csrf
+                        @method('PUT')
 
-            <!--  Name -->
-            <div class="mb-4">
-                <label for="name" class="block text-sm font-medium text-gray-600">Start:</label>
-                <input type="text" id="name" name="start" value="{{ $slot->start }}" class="mt-1 p-2 w-full border rounded-md" required>
-            </div>
+                        <!--  Name -->
+                        <div class="mb-4">
+                            <label for="name">Start:</label>
+                            <input type="text" id="name" name="start" value="{{ $slot->start }}" class="mt-1 p-2 w-full border rounded-md">
+                        </div>
 
-            <!-- Class Description -->
-            <div class="mb-4">
-                <label for="description" class="block text-sm font-medium text-gray-600">End:</label>
-                <input type="text" id="name" name="end" value="{{ $slot->end }}" class="mt-1 p-2 w-full border rounded-md" required>
-            </div>
-            <div class="mb-4">
-                <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300">Save Changes</button>
+                        <div class="mb-4">
+                            <label for="name">End:</label>
+                            <input type="text" id="name" name="end" value="{{ $slot->end }}" class="mt-1 p-2 w-full border rounded-md">
+                        </div>
 
-        </form>
-            </div>
-
+                        <!-- Class Rating -->
+                        <div class="mb-4">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                        </div>
+                </div>
 
     <script>
        document.addEventListener('DOMContentLoaded', function() {
