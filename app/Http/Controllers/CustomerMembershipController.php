@@ -46,9 +46,10 @@ class CustomerMembershipController extends Controller
     }
 
     public function cancelMembership(CustomerMemberships $membership){
+
         try{
             $this->customerMembershipRepository->cancelMembership($membership);
-            return redirect()->route('dashboard')->with('successMessage', "Membership Cancelled Successfully");
+            return redirect()->route("customer.subscription", ["customer" => $membership->customer_id])->with('successMessage', "Membership Cancelled Successfully");
 
         }catch(\Exception $e){
 
@@ -69,7 +70,9 @@ class CustomerMembershipController extends Controller
 
         try{
             $this->customerMembershipRepository->pauseMembership($membership,$request->pause_date, $request->reason);
-            return redirect()->route('dashboard')->with('successMessage', "Membership Paused Action Added Successfully");
+
+            return redirect()->route("customer.subscription", ["customer" => $membership->customer_id])->with('successMessage', "Membership Paused Action Added Successfully");
+
 
         }catch(\Exception $e){
 
@@ -93,13 +96,10 @@ class CustomerMembershipController extends Controller
     }
     public function createMembership(Customer $customer, CreateNewMembershipRequest $request){
 
-
         // First time
         if(!$customer->email){
             $customer->update(["email"=> $request->email]);
         }
-
-        dd($this->customerAuthRepository->SendCodeViaEmail($customer));
 
         if($customer->activeSubscription){
             return redirect()->route('dashboard')->with('errorMessage', "Unknown Error Occured");
@@ -129,11 +129,11 @@ class CustomerMembershipController extends Controller
             $this->customerAuthRepository->SendCodeViaEmail($customer);
 
 
-            return redirect()->route('dashboard')->with('successMessage', "Membership Paused Action Added Successfully");
+            return redirect()->route("customer.subscription", ["customer" => $customer])->with('successMessage', "Membership Added Successfully");
 
         }catch(\Exception $e){
 
-            return redirect()->route('dashboard')->with('errorMessage', "Unknown Error Occured");
+            return redirect()->route("customer.subscription", ["customer" => $customer])->with('errorMessage', "Unknown Error Occured");
         }
 
     }
@@ -157,7 +157,8 @@ class CustomerMembershipController extends Controller
 
         try{
             $this->customerMembershipRepository->resumeMembership($membership);
-            return redirect()->route('dashboard')->with('successMessage', "Membership UN-Paused Successfully");
+            return redirect()->route("customer.subscription", ["customer" => $membership->customer_id])->with('successMessage', "Membership UN-Paused Successfully");
+
 
         }catch(\Exception $e){
 

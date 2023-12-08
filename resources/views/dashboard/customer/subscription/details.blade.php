@@ -41,7 +41,15 @@
                                             </small></div>
                                     </div>
                                 </td>
-                                <td>{{ $membership->formattedExpiryDate() }} </td>
+                                <td>
+                                    @isset($membership->cancelled_at)
+                                        <p class="m-0 text-decoration-line-through">{{ $membership->formattedExpiryDate() }}</p>
+                                        <small class="text-muted">Cancelled On: {{ $membership->formattedCancelledDate() }}</small>
+                                    @else
+                                    {{ $membership->formattedExpiryDate() }}
+
+                                    @endisset
+                                </td>
                                 <td>
                                     @if ($membership->calculateProgress() == -1)
                                     <div class="text-center">
@@ -67,10 +75,10 @@
                                             class="btn btn-sm btn-outline-primary waves-effect">
                                             Pause
                                         </a>
-                                        <a href="{{ route('customer.membership.extend', ['membership' => $membership->id]) }}"
+                                        {{-- <a href="{{ route('customer.membership.extend', ['membership' => $membership->id]) }}"
                                             class="btn btn-sm btn-outline-secondary waves-effect">
                                             Extend
-                                        </a>
+                                        </a> --}}
                                         <a href="{{ route('customer.membership.cancel', ['membership' => $membership->id]) }}"
                                             class="btn btn-sm btn-outline-danger waves-effect">
                                             Cancel

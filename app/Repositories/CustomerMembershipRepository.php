@@ -6,6 +6,7 @@ use App\Models\V1\Customer;
 use App\Models\V1\CustomerAuth;
 use App\Models\V1\CustomerMemberships;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 
 class CustomerMembershipRepository
 {
@@ -13,7 +14,8 @@ class CustomerMembershipRepository
     public function cancelMembership(CustomerMemberships $customerMembership) : bool {
 
         $customerMembership->update([
-            "status" => CustomerMemberships::STATUS_CANCELLED
+            "status" => CustomerMemberships::STATUS_CANCELLED,
+            "cancelled_at" => Date::now()
         ]);
 
         return true;
@@ -60,7 +62,8 @@ class CustomerMembershipRepository
     public function resumeMembership(CustomerMemberships $customerMembership){
 
         $customerMembership->update([
-            "status"=> CustomerMemberships::STATUS_CANCELLED
+            "status"=> CustomerMemberships::STATUS_CANCELLED,
+            "cancelled_at" => Date::now()
         ]);
 
 

@@ -16,7 +16,7 @@ class CustomerMemberships extends Model
     const STATUS_PAUSED = 901;
     const STATUS_CANCELLED = 999;
     protected $fillable = [
-        "customer_id", "created_by", "expiry_date", "status", "paused_at", "balance_days", "pausing_reason"
+        "customer_id", "created_by", "cancelled_at", "expiry_date", "status", "paused_at", "balance_days", "pausing_reason"
     ];
 
     public function todaysAttendance(){
@@ -40,6 +40,11 @@ class CustomerMemberships extends Model
     public function formattedExpiryDate(){
         return Carbon::parse($this->expiry_date)->format('F j, Y');
     }
+    public function formattedCancelledDate(){
+        return Carbon::parse($this->cancelled_at)->format('F j, Y');
+    }
+
+
     public function calculateProgress()
     {
         if( in_array( $this->status, [self::STATUS_EXPIRED, self::STATUS_CANCELLED]))

@@ -1,21 +1,28 @@
 <x-app-layout>
-    <div class="mt-8 p-6 max-w-6xl mx-auto bg-white rounded-lg shadow-md">
+
+    <div class="container">
+
+        <div class="card mb-4">
+
+            <h5 class="card-header">Unpause Customer's Subscription</h5>
+            <div class="container">
+
         <form action="{{ route('customer.membership.resume', ['membership' => $membership->id]) }}" method="POST">
             @csrf
-            <p class="text-lg font-semibold mb-4">Un Pause Membership</p>
 
             <div class="mb-4">
-                <label for="pause_date" class="block text-sm font-medium text-gray-600 mb-2">Un Pause Membership For:</label>
+                <label for="pause_date" class="block text-sm font-medium text-gray-600 mb-2">Un-Pause Membership For:</label>
                 {{ $membership->balance_days}} Days
                 @error('pause_date')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <button type="submit"  class="bg-green-800 hover:bg-green-700 text-white py-2 px-4 rounded">
+            <button type="submit"  class="btn btn-primary">
                 Unpause Membership
             </button>
         </form>
+        <br>
     </div>
 
 

@@ -4,12 +4,15 @@ use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClassesTimingsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerMembershipController;
+use App\Http\Controllers\CustomerMembershipExtendPricesController;
+use App\Http\Controllers\CustomMembershipExtendPricesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionSliderController;
 use App\Http\Controllers\slotsController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\WorkoutsMusclesController;
+use App\Models\CustomMembershipExtendPrices;
 use App\Models\V1\ClassesTimings;
 use Illuminate\Support\Facades\Route;
 
@@ -81,6 +84,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('workouts', WorkoutController::class);
         Route::resource('workoutsMuscles', WorkoutsMusclesController::class);
         Route::resource('slider', PromotionSliderController::class);
+        Route::resource('extendPrices', CustomerMembershipExtendPricesController::class);
 
         Route::get('slider/{slider}/status', [PromotionSliderController::class,'changeStatus'])->name("slider.status");
 
@@ -92,6 +96,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('saleCustomer/{sale}', [ProductsController::class,'saleCustomer'])->name("products.sale.customer.search");
         Route::put('updateSale/{sale}', [ProductsController::class,'updateSale'])->name("products.updateSale");
+
+
 
 
 

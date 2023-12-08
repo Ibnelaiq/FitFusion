@@ -1,21 +1,47 @@
 <x-app-layout>
 
-    <div class="mt-4 p-6 max-w-[80%] mx-auto bg-white rounded shadow-md">
-        <h2 class="text-2xl font-semibold mb-4">Products:</h2>
+    <!-- Menu -->
 
-        <div class="flex flex-col">
-            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                <div class="overflow-hidden">
-                <table class="min-w-full text-left text-sm font-light">
-                    <thead class="border-b font-medium dark:border-neutral-500">
-                    <tr>
-                        <th scope="col" class="px-6 py-4">#</th>
-                        <th scope="col" class="px-6 py-4">View</th>
-                        <th scope="col" class="px-6 py-4">Status</th>
-                        <th scope="col" class="px-6 py-4">Action </th>
-                    </tr>
-                    </thead>
+    <!-- / Menu -->
+
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+        <!-- DataTable with Buttons -->
+        <div class="card">
+            <div class="card-datatable table-responsive pt-0">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="card-header flex-column flex-md-row">
+                        <div class="head-label text-center">
+                            <h5 class="card-title mb-0"><span class="text-light"> Slider /</span> All</h5>
+                        </div>
+                        <div class="dt-action-buttons text-end pt-3 pt-md-0">
+                            <div class="dt-buttons btn-group flex-wrap">
+                                <a href="{{ route('slider.create') }}">
+                                    <button
+                                        class="btn btn-secondary create-new btn-primary" tabindex="0"
+                                        aria-controls="DataTables_Table_0" type="button">
+                                        <span><i
+                                                class="ti ti-plus me-sm-1"></i> <span
+                                                class="d-none d-sm-inline-block">Add New
+                                                Record</span></span></button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="datatables-basic table dataTable no-footer dtr-column" id="DataTables_Table_0"
+                        aria-describedby="DataTables_Table_0_info" style="width: 383px;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                     <tbody>
                 <!-- Class Cards -->
                 @foreach($sliders as $slider)
@@ -23,26 +49,37 @@
                 <tr class="border-b dark:border-neutral-500">
                     <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $slider->id }}</td>
                     <td class="whitespace-nowrap px-6 py-4">
-                        <a href="{{ $slider->url }}" target="_blank" class="text-green-700"> <b> View </b>  </a>
+                        <img src="{{ $slider->url }}" width="100">
+
+
                     </td>
                     <td class="whitespace-nowrap px-6 py-4">
                         @if ($slider->status == 1)
-                            <p class="text-green-500"> ACTIVE </p>
+                            <p class="badge badge-sm bg-success"> ACTIVE </p>
                         @else
-                        <p class="text-red-500"> INACTIVE </p>
+                        <p class="badge badge-sm bg-danger"> INACTIVE </p>
                         @endif
                     </td>
 
                     <td class="whitespace-nowrap px-6 py-4">
                         @if ($slider->status == 1)
                             <a href="{{ route('slider.status', ['slider'=> $slider, 'flag' => 2]) }}">
-                                <button type="button" class="flex-shrink-0 bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700 text-sm border-4 text-white py-1 px-2 rounded">Inactive</button>
+                                <button type="button"
+                                class="btn btn-sm btn-outline-danger">
+                                Mark Inactive</button>
                             </a>
                         @else
                             <a href="{{ route('slider.status', ['slider'=> $slider, 'flag' => 1]) }}">
-                                <button type="button" class="flex-shrink-0 bg-green-500 hover:bg-green-700 border-green-500 hover:border-green-700 text-sm border-4 text-white py-1 px-2 rounded">Active</button>
+                                <button type="button"
+                                class="btn btn-sm btn-outline-success"
+                                >Mark Active</button>
                             </a>
                         @endif
+                        <a href="{{ $slider->url }}" target="_blank">
+                            <button type="button"
+                            class="btn btn-sm btn-outline-secondary"
+                            >View Image</button>
+                        </a>
 
 
                     </td>
