@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer_membership_extend_prices', function (Blueprint $table) {
-            $table->id();
-            $table->text("duration");
-            $table->float("price");
-            $table->integer("status");
-            $table->softDeletes();
-            $table->timestamps();
-        });
+        // Schema::create('customer_membership_extend_prices', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->text("duration");
+        //     $table->float("price");
+        //     $table->integer("status");
+        //     $table->softDeletes();
+        //     $table->timestamps();
+        // });
     }
 
     /**
