@@ -4,8 +4,10 @@ use App\Http\Controllers\Api\V1\CustomerController;
 use App\Http\Controllers\Api\V1\CustomerMembershipsController;
 use App\Http\Controllers\Api\V1\ClassesController;
 use App\Http\Controllers\Api\V1\CustomerMembershipAttendanceController;
+use App\Http\Controllers\Api\V1\CustomerMembershipExtendController;
 use App\Http\Controllers\Api\V1\FrontPageController;
 use App\Http\Controllers\Api\V1\WorkoutsController;
+use App\Http\Controllers\TrackWorkoutController;
 use App\Models\V1\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -63,6 +65,13 @@ Route::prefix("v1")->namespace("App\Http\Controllers\Api\V1")->group(function ()
         Route::resource('workouts', WorkoutsController::class, ["except" => ["index", "store"]]);
 
         Route::post("/workouts", [WorkoutsController::class ,"index"]);
+        Route::post("/customers/routine/track", [TrackWorkoutController::class ,"trackWorkout"]);
+        Route::post("/customers/routine", [TrackWorkoutController::class ,"getTracking"]);
+
+        Route::post("/customers/extend/capturePayment", [CustomerMembershipExtendController::class ,"capturePayment"]);
+
+
+
 
     });
 

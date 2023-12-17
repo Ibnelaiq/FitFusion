@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\MembershipPurchasePricesController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClassesTimingsController;
 use App\Http\Controllers\CustomerController;
@@ -97,8 +98,10 @@ Route::middleware('auth')->group(function () {
         Route::get('saleCustomer/{sale}', [ProductsController::class,'saleCustomer'])->name("products.sale.customer.search");
         Route::put('updateSale/{sale}', [ProductsController::class,'updateSale'])->name("products.updateSale");
 
-
-
+        Route::prefix('api/')->group(function () {
+            Route::get('membershipPrice/{days}', [MembershipPurchasePricesController::class,'getPrice']);
+            Route::put('membershipPrice/{days}', [MembershipPurchasePricesController::class,'setPrice']);
+        });
 
 
     });
