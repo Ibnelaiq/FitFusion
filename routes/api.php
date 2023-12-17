@@ -65,8 +65,8 @@ Route::prefix("v1")->namespace("App\Http\Controllers\Api\V1")->group(function ()
         Route::resource('workouts', WorkoutsController::class, ["except" => ["index", "store"]]);
 
         Route::post("/workouts", [WorkoutsController::class ,"index"]);
-        Route::post("/customers/routine/track", [TrackWorkoutController::class ,"trackWorkout"]);
-        Route::get("/customers/routine", [TrackWorkoutController::class ,"getTracking"]);
+        Route::post("/routine/track", [TrackWorkoutController::class ,"trackWorkout"]);
+        Route::get("/routine", [TrackWorkoutController::class ,"getTracking"]);
 
         Route::post("/customers/extend/capturePayment", [CustomerMembershipExtendController::class ,"capturePayment"]);
 
