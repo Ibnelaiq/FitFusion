@@ -10,23 +10,18 @@ use Stripe\StripeClient;
 class CustomerMembershipExtendController extends Controller
 {
     public function capturePayment(Request $request){
+
+        $amount = intval($request->input("amount")) * 100;
+
         $stripe = new StripeClient("sk_test_51KFd7HHjhOs2YctLJjPWRMLLEPI9bFcAWnhy8WGBfNnpJhY2jNMKQS62xznqdHeeGWACqBgUceKIAIwlSJGQgoOv00ELTk8nFR");
 
 
         $intent = $stripe->paymentIntents->create([
-            'amount' => 1000,
-            'currency' => 'usd',
-
+            'amount' => $amount,
+            'currency' => $request->input("currency")
         ]);
 
-        // $stripe->paymentIntents->confirm(
-        //     $intent->client_secret,
-        //     [
-        //         'payment_method' => $method->id,
-        //     ]
-        // );
-
-        return response()->json($intent);
+        return response()->json([ "secret" => $intent->client_secret]);
 
     }
 
