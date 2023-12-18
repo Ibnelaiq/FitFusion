@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.selected_muscle{
+    fill-opacity:1!important;
+}
+
+.workout-muscles{
+
+    background-color:#121329;
+    border-radius:30px;
+    padding:0px 20px;
+}
+.workout-muscles path{
+    fill-opacity:0.5;
+}

@@ -41,6 +41,7 @@ class WorkoutController extends Controller
      */
     public function store(WorkoutStoreRequest $request)
     {
+
         $workout = Workouts::create($request->only([
             "name","description","video_url"
         ]));
@@ -57,17 +58,29 @@ class WorkoutController extends Controller
         }
 
         if($request->has("dropdownF")){
-            WorkoutActivatedMuscles::create([
-                "workouts_id" => $workout->id,
-                "code"        => $request->input("dropdownF")
-            ]);
+
+            $muscF = explode(',',$request->input("dropdownF"));
+
+            foreach ($muscF as $key => $value) {
+                WorkoutActivatedMuscles::create([
+                    "workouts_id" => $workout->id,
+                    "code"        => $value
+                ]);
+            }
+
         }
 
         if($request->has("dropdownB")){
-            WorkoutActivatedMuscles::create([
-                "workouts_id" => $workout->id,
-                "code"        => $request->input("dropdownB")
-            ]);
+
+            $muscF = explode(',',$request->input("dropdownB"));
+
+            foreach ($muscF as $key => $value) {
+                WorkoutActivatedMuscles::create([
+                    "workouts_id" => $workout->id,
+                    "code"        => $value
+                ]);
+            }
+
         }
 
         return redirect()->route("workouts.index")->with("success","Workout Created Successfully");
@@ -100,6 +113,46 @@ class WorkoutController extends Controller
      */
     public function update(Request $request, Workouts $workout)
     {
+
+
+        // $selectedMuscles = explode(",",$request->get("muscles"));
+        // $previousMuscles = $workout->activatedMuscles->pluck('code')->toArray();
+
+        // $inverseIntersection = array_diff($selectedMuscles, $previousMuscles);
+
+        // foreach ($previousMuscles as $previousMuscle) {
+        //     if(in_array($previousMuscle, $selectedMuscles)){
+        //         continue;
+        //     }
+        //     WorkoutActivatedMuscles::where(["code" => $previousMuscles, "workouts_id" => $workout->id])->delete();
+        // }
+
+        // foreach ($inverseIntersection as $newMuscle) {
+        //     WorkoutActivatedMuscles::create([
+        //         "code" => $newMuscle,
+        //         "workouts_id" => $workout->id
+        //     ]);
+        // }
+
+        $selectedMuscles = explode(",", $request->get("muscles"));
+        $previousMuscles = $workout->activatedMuscles->pluck('code')->toArray();
+
+        $musclesToDelete = array_diff($previousMuscles, $selectedMuscles);
+
+        foreach ($musclesToDelete as $muscleToDelete) {
+            WorkoutActivatedMuscles::where(["code" => $muscleToDelete, "workouts_id" => $workout->id])->delete();
+        }
+
+        $musclesToAdd = array_diff($selectedMuscles, $previousMuscles);
+
+        foreach ($musclesToAdd as $newMuscle) {
+            WorkoutActivatedMuscles::create([
+                "code" => $newMuscle,
+                "workouts_id" => $workout->id
+            ]);
+        }
+
+
         $workout->update($request->only([
             "name","description","video_url"
         ]));
