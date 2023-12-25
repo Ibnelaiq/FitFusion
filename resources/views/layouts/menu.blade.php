@@ -154,9 +154,9 @@
           </a>
           <ul class="menu-sub">
             <li class="menu-item">
-              <a href="https://pixinvent.ticksy.com/" target="_blank" class="menu-link">
+              <a href="{{ route('coupons.index') }}" target="_blank" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-lifebuoy"></i>
-                <div data-i18n="Reports">Reports</div>
+                <div data-i18n="Coupons">Coupons</div>
               </a>
             </li>
             <li class="menu-item">
