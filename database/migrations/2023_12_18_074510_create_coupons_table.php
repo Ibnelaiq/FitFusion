@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('membership_extend_prices', function (Blueprint $table) {
+        Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->integer("duration_in_days");
-            $table->float("price");
+            $table->string("code");
+            $table->integer("disocunt_type");
+            $table->float("discount_amount");
             $table->integer("status");
+            $table->date("start_date");
+            $table->date("end_date")->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customer_membership_extend_prices');
+        Schema::dropIfExists('coupons');
     }
 };

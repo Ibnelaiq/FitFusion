@@ -3,26 +3,39 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CaptureExtendPaymentRequest;
+use App\Models\V1\CustomerMembershipExtendPrices;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\StripeClient;
 
 class CustomerMembershipExtendController extends Controller
 {
-    public function capturePayment(Request $request){
+    public function capturePayment(CaptureExtendPaymentRequest $request){
 
-        $amount = intval($request->input("amount")) * 100;
+        $extend = CustomerMembershipExtendPrices::where(["id" => $request->get("extend_id")])->first();
 
-        $stripe = new StripeClient("sk_test_51KFd7HHjhOs2YctLJjPWRMLLEPI9bFcAWnhy8WGBfNnpJhY2jNMKQS62xznqdHeeGWACqBgUceKIAIwlSJGQgoOv00ELTk8nFR");
+        if(!$extend)
+            return response("",404);
+
+
+        $stripe = new StripeClient(env("STRIPE_SECRET_KEY"));
 
 
         $intent = $stripe->paymentIntents->create([
-            'amount' => $amount,
-            'currency' => $request->input("currency")
+            'amount' => $extend->price,
+            'currency' => "usd"
         ]);
 
-        return response()->json([ "secret" => $intent->client_secret]);
+        return response()->json([ "secret" => $intent->client_secret, "price" => $extend->price]);
 
+    }
+
+    public function extendPrices(){
+        $prices = CustomerMembershipExtendPrices::where([
+            "status" => CustomerMembershipExtendPrices::STATUS_ACTIVE,
+        ])->get();
+        return new \App\Http\Resources\V1\CustomerMembershipExtendPurchasePrices($prices);
     }
 
 }

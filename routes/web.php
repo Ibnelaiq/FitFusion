@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\MembershipPurchasePricesController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClassesTimingsController;
+use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerMembershipController;
 use App\Http\Controllers\CustomerMembershipExtendPricesController;
@@ -85,7 +86,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('workouts', WorkoutController::class);
         Route::resource('workoutsMuscles', WorkoutsMusclesController::class);
         Route::resource('slider', PromotionSliderController::class);
-        Route::resource('extendPrices', CustomerMembershipExtendPricesController::class);
+        Route::resource('customer/subscription/extendPrices', CustomerMembershipExtendPricesController::class);
+        Route::resource('customer/subscription/extendPrices', CustomerMembershipExtendPricesController::class);
+
+        Route::resource('coupons', CouponsController::class);
 
         Route::get('slider/{slider}/status', [PromotionSliderController::class,'changeStatus'])->name("slider.status");
 

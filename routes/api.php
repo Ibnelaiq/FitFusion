@@ -68,7 +68,18 @@ Route::prefix("v1")->namespace("App\Http\Controllers\Api\V1")->group(function ()
         Route::post("/routine/track", [TrackWorkoutController::class ,"trackWorkout"]);
         Route::get("/routine", [TrackWorkoutController::class ,"getTracking"]);
 
-        Route::post("/customers/extend/capturePayment", [CustomerMembershipExtendController::class ,"capturePayment"]);
+        Route::prefix('/payment')->group(function () {
+
+            Route::prefix('/membership')->group(function () {
+
+                Route::prefix('/extend')->group(function () {
+                    Route::get("/prices", [CustomerMembershipExtendController::class ,"extendPrices"]);
+                    Route::post("/capture", [CustomerMembershipExtendController::class ,"capturePayment"]);
+
+                });
+
+            });
+        });
 
 
 

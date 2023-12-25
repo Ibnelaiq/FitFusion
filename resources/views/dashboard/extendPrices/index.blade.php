@@ -21,13 +21,13 @@
                             <div class="row pb-2">
 
                                 @foreach ($prices as $price)
-                                    <div class="col-md mb-md-0 mb-2">
-                                        <div class="form-check custom-option custom-option-icon">
-                                            <label class="form-check-label custom-option-content"
+                                    <div class="col-md-2 mb-md-0 mb-2">
+                                        <div class="form-check custom-option custom-option-icon border border-success">
+                                            <label class="form-check-label custom-option-content p-2 "
                                                 for="customRadioBuilder">
                                                 <span class="custom-option-body">
                                                     <span class="custom-option-title">
-                                                        {{ $price->duration}}
+                                                        Days: {{ $price->duration_in_days}}
                                                     </span>
                                                     <p class="m-0">Price: {{ $price->price }}</p>
                                                 </span>

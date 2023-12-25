@@ -16,3 +16,6 @@
 .workout-muscles path{
     fill-opacity:0.5;
 }
+input:disabled,input[type='number']:read-only{
+    background-color: #f3f3f3;
+}
