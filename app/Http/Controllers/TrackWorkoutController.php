@@ -42,7 +42,7 @@ class TrackWorkoutController extends Controller
     public function getTracking(Request $request){
         $workouts = TrackWorkout::where([
             "customer_id" => $request->user()->id
-        ])->limit(7)->get();
+        ])->limit(7)->orderBy("created_at", "desc")->get();
         $finalArray = [];
 
         foreach ($workouts as $key => $value) {
@@ -66,11 +66,16 @@ class TrackWorkoutController extends Controller
     function customDateFormat($timestamp)
     {
 
+
+        $now = now();
         $carbonTimestamp = \Illuminate\Support\Carbon::parse($timestamp);
 
         // Check if the timestamp is today
         if ($carbonTimestamp->isToday()) {
             return 'today';
+        }
+        elseif ($carbonTimestamp->isSameDay($now->subDay())) {
+            return 'yesterday';
         }
 
         // If not today, format the date without the time
